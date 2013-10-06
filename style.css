@@ -55,10 +55,14 @@ h1 {
 #topmenu {
 	width: 400px;
 	position: absolute;
-	top: 18px;
-	left: 0;
+	top: 35px;
+	left: 15px;
 	color: #fff;
 	font-size: 16px;
+	}
+ul#topmenu {
+	margin: 0;
+	padding: 0;
 	}
 #topmenu ul {
 	margin: 0;
@@ -69,6 +73,7 @@ h1 {
 	color: #fff;
 	text-decoration: none;
 	border: none;
+	overflow: hidden;
 	}
 #topmenu li {
 	margin: 0;
@@ -85,9 +90,13 @@ ul#topmenu ul {
 	}
 ul#topmenu ul li {
 	background: #DF5B57;
-	padding: 5px 10px;
+	padding: 0 10px;
 	width: 300px;
-	margin: 0 -15px;
+	height: 25px;
+	margin: 0 -10px;
+	}
+ul#topmenu ul li:last-child {
+	border-bottom:5px solid #DF5B57;
 	}
 ul#topmenu li:hover > ul {
 	display: block;
@@ -95,6 +104,7 @@ ul#topmenu li:hover > ul {
 	}
 ul#topmenu li ul li div {
 	width: 100%;
+	height: 25px;
 	}
 ul#topmenu li ul li a:hover > div {
 	color: #000;
