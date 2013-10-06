@@ -37,13 +37,14 @@ while($row = mysql_fetch_array($art_res))
 {
 	$og = unserialize(stripslashes($row['og']));
 	$titel = isset($og['title']) ? $og['title'] : substr($row['clean_url'],26);
+	$description = isset($og['description']) ? $og['description'] : 'Een mysterieus artikel';
 
 	$r = mysql_query ('select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = '.$row['ID'].' and meta.type = "'.$extra_query_var.'"');
 	$extra_arr = mysql_fetch_array($r);
 	?>
 	<tr <?php if($i % 2 == 1) echo 'class="odd"'?>>
 		<td><?php echo substr($row['created_at'],8,2); echo '-'.substr($row['created_at'],5,2).' '.substr($row['created_at'],11,5) ?></td>
-		<td><a href="<?php echo $row['share_url'];?>"><?php echo $titel ;?></a></td>
+		<td><a href="<?php echo $row['share_url'];?>" title="'.<?php echo $description ?>.'"><?php echo $titel ;?></a></td>
 		<td><a href="./meta_art.php?id=<?php echo $extra_arr['ID'];?>"><?php echo $extra_arr['waarde'] ?></a></td>
 	</tr>
 <?php
