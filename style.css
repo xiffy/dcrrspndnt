@@ -34,7 +34,7 @@ th {
 	}
 h1 {
 	width: auto;
-	color: #000;
+	color: #222;
 	background-color: #DF5B57;
 	padding: 5px 10px 25px 10px;
 	margin: 0 0 10px 0;
@@ -89,14 +89,14 @@ ul#topmenu ul {
 	display: none;
 	}
 ul#topmenu ul li {
-	background: #DF5B57;
+	background: rgba(223, 91, 87, 0.9);
 	padding: 0 10px;
 	width: 300px;
 	height: 25px;
 	margin: 0 -10px;
 	}
 ul#topmenu ul li:last-child {
-	border-bottom:5px solid #DF5B57;
+	border-bottom:5px solid rgba(223, 91, 87, 0.9);
 	}
 ul#topmenu li:hover > ul {
 	display: block;
