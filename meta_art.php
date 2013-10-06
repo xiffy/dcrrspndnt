@@ -69,6 +69,7 @@ while($row = mysql_fetch_array($art_res))
 ?>
 		</table>
 		<a href="./" class="clear all">Alle artikelen</a>
+<?php include('footer.php') ?>
 	</body>
 <?php @include('ga.inc.php'); ?>
 </html>

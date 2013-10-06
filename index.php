@@ -41,6 +41,8 @@ while($row = mysql_fetch_array($res) )
 	$i++;
 }
 ?>
+</table>
+<?php include('footer.php') ?>
 </body>
 <?php @include('ga.inc.php') ?>
 
