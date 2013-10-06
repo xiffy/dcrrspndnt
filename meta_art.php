@@ -21,7 +21,7 @@ $extra_query_var = $mode == 'author' ? 'article:section' : 'article:author';
 	</head>
 
 	<body>
-		<h1>Artikelen geschreven door: <?php echo $meta_row['waarde']?></h1>
+		<h1>Artikelen geschreven <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde']?></h1>
 		<a href="./" class="all">Alle artikelen</a>
 		<div class="clear"></div>
 		<table class="meta-table">
