@@ -1,5 +1,5 @@
-﻿<ul id="topmenu">
-	<li>Auteurs
+<ul id="topmenu">
+	<li><strong> Auteurs</strong> &#9660;
 		<ul>
 			<?php
 $r = mysql_query('select * from meta where meta.type = "article:author" order by waarde');
@@ -12,7 +12,7 @@ while($row = mysql_fetch_array($r))
 			?>
 		</ul>
 	</li>
-	<li>Secties
+	<li><strong> Secties</strong> &#9660;
 		<ul>
 			<?php
 $r = mysql_query('select * from meta where meta.type = "article:section" order by waarde');
