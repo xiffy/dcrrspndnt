@@ -90,3 +90,12 @@ ul#topmenu li:hover > ul {
 	display: block;
 	background: #DF5B57;
 	}
+footer {
+	margin: 0;
+	background: #eee;
+	color: #666;
+	min-height: 200px;
+	}
+footer p {
+	padding: 0 10px;
+	}
