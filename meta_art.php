@@ -1,6 +1,7 @@
 ﻿<?php
 require_once('settings.local.php');
 include('db.php');
+
 $meta_id = (int)$_GET['id'];
 $meta_res = mysql_query('select * from meta where ID = '.$meta_id);
 $meta_row = mysql_fetch_array($meta_res);
@@ -12,14 +13,17 @@ $th_extra = $mode == 'author' ? 'sectie' : 'auteur';
 $th_related = $mode == 'author' ? 'auteurs' : 'secties';
 $extra_query_var = $mode == 'author' ? 'article:section' : 'article:author';
 ?>
+
 <html>
 	<head>
 		<title>de Correspondent, artikelen <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde'].' ('.$mode.')';?></title>
 		<link rel="stylesheet" href="./style.css" />
 	</head>
+
 	<body>
-		<a href="./">Alle artikelen</a>
 		<h1>Artikelen geschreven door: <?php echo $meta_row['waarde']?></h1>
+		<a href="./" class="all">Alle artikelen</a>
+		<div class="clear"></div>
 		<table class="meta-table">
 			<tr>
 				<th>Opgedoken</th>
@@ -64,7 +68,7 @@ while($row = mysql_fetch_array($art_res))
 			}
 ?>
 		</table>
-		<a href="./" class="clear">Alle artikelen</a>
+		<a href="./" class="clear all">Alle artikelen</a>
 	</body>
 <?php @include('ga.inc.php'); ?>
 </html>
