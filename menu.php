@@ -1,4 +1,5 @@
 <ul id="topmenu">
+	<li><strong><a href="./"> Alle artikelen</a></strong></li>
 	<li><strong> Auteurs</strong> &#9660;
 		<ul>
 			<?php
