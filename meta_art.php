@@ -1,4 +1,5 @@
-﻿<?php
+﻿<!DOCTYPE html>
+<?php
 require_once('settings.local.php');
 include('db.php');
 
@@ -13,13 +14,11 @@ $th_extra = $mode == 'author' ? 'sectie' : 'auteur';
 $th_related = $mode == 'author' ? 'auteurs' : 'secties';
 $extra_query_var = $mode == 'author' ? 'article:section' : 'article:author';
 ?>
-
 <html>
 	<head>
 		<title>de Correspondent, artikelen <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde'].' ('.$mode.')';?></title>
 		<link rel="stylesheet" href="./style.css" />
 	</head>
-
 	<body>
 		<h1>Artikelen geschreven <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde']?></h1>
 <?php include('menu.php')?>
