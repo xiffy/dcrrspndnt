@@ -6,7 +6,7 @@ $r = mysql_query('select * from meta where meta.type = "article:author" order by
 while($row = mysql_fetch_array($r))
 {
 	?>
-				<li><a href="./meta_art.php?id=<?php echo $row['ID']?>"><?php echo $row['waarde'] ?></a></li>
+				<li><a href="./meta_art.php?id=<?php echo $row['ID']?>"><div><?php echo $row['waarde'] ?></div></a></li>
 <?php
 }
 			?>
@@ -19,7 +19,7 @@ $r = mysql_query('select * from meta where meta.type = "article:section" order b
 while($row = mysql_fetch_array($r))
 {
 	?>
-				<li><a href="./meta_art.php?id=<?php echo $row['ID']?>"><?php echo $row['waarde'] ?></a></li>
+				<li><a href="./meta_art.php?id=<?php echo $row['ID']?>"><div><?php echo $row['waarde'] ?></div></a></li>
 <?php
 }
 			?>
