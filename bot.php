@@ -15,7 +15,7 @@ $since = get_since();
 
 echo 'sinds: '.$since."\n";
 // go to https://dev.twitter.com/apps and create new application
-// and obtain [CONSUMER_KEY], [CONSUMER_SECRET], [oauth_token], [oauth_token_secret]
+// and obtain [CONSUMER_KEY], [CONSUMER_SECRET], [oauth_key], [oauth_secret]
 // then put them in settings.local.php
 $oauth = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, OAUTH_KEY, OAUTH_SECRET);
 
