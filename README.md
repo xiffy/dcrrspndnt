@@ -3,6 +3,8 @@ dcrrspndnt
 
 De Correspondentbot, zoekt op twitter links naar artikelen op De Correspondent (http://decorrespondent.nl/), indien een nieuw, gedeeld artikel wordt gevonden stuurt de bot een request voor dat artikel op de correspondent. Vervolgens leest de bot de open-graph informatie en slaat die bij het gevonden artikel op.
 
+preview: http://molecule.nl/decorrespondent/
+
 Installatie:
 checkout de repo
 kopieer settings.local.php.sample naar settings.local.php
