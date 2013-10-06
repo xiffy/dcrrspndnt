@@ -33,15 +33,20 @@ th {
 	background: #eee;
 	}
 h1 {
-	width: 100% - 20px;
+	width: auto;
 	color: #000;
 	background-color: #DF5B57;
-	padding: 0 10px;
+	padding: 5px 10px 5px 10px;
 	}
 .meta-table {
 	float: left;
 	max-width: 60%;
+	margin-top: 5px;
 	}
 .clear {
 	clear: both;
+	}
+.all {
+	padding: 0 5px;
+	margin-bottom: 3px;
 	}
