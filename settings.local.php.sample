@@ -1,0 +1,15 @@
+﻿<?php
+// settings.local.php
+// edit this file containing your own information and save as settings.local.php
+
+// database info
+define ('DB_HOST', 'localhost');
+define ('DB_USER', 'USERNAME');
+define ('DB_PASSWD', 'PASSWORD');
+define ('DB_NAME', 'DB_NAME');
+
+// twitter keys
+define ('CONSUMER_KEY', 'consumer_key');
+define ('CONSUMER_SECRET', 'consumer_secret');
+define ('OAUTH_KEY', 'oauth_key');
+define ('OAUTH_SECRET', 'oauth_secret');
