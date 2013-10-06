@@ -36,7 +36,7 @@ h1 {
 	width: auto;
 	color: #000;
 	background-color: #DF5B57;
-	padding: 5px 10px 5px 10px;
+	padding: 5px 10px 25px 10px;
 	margin: 0 0 10px 0;
 	}
 .meta-table {
@@ -55,8 +55,8 @@ h1 {
 #topmenu {
 	width: 400px;
 	position: absolute;
-	top: 0;
-	left: 60%;
+	top: 18px;
+	left: 0;
 	color: #fff;
 	font-size: 16px;
 	}
@@ -72,12 +72,13 @@ h1 {
 	}
 #topmenu li {
 	margin: 0;
-	padding: 0;
-	}
-#topmenu li {
-	display: inline;
+	padding 0;
 	width: 200px;
+	display: inline;
 	float: left;
+	}
+#topmenu li li {
+	width: 250px;
 	}
 ul#topmenu ul {
 	display: none;
@@ -85,16 +86,20 @@ ul#topmenu ul {
 ul#topmenu ul li {
 	background: #DF5B57;
 	padding: 5px 10px;
+	width: 300px;
+	margin: 0 -15px;
 	}
 ul#topmenu li:hover > ul {
 	display: block;
 	background: #DF5B57;
 	}
+
 footer {
 	margin: 0;
 	background: #eee;
 	color: #666;
 	min-height: 200px;
+	padding-top: 20px;
 	}
 footer p {
 	padding: 0 10px;
