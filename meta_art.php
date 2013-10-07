@@ -43,7 +43,7 @@ while($row = mysql_fetch_array($art_res))
 	?>
 	<tr <?php if($i % 2 == 1) echo 'class="odd"'?>>
 		<td><?php echo substr($row['created_at'],8,2); echo '-'.substr($row['created_at'],5,2).' '.substr($row['created_at'],11,5) ?></td>
-		<td><a href="<?php echo $row['share_url'];?>" title="'.<?php echo $description ?>.'"><?php echo $titel ;?></a></td>
+		<td><a href="<?php echo $row['share_url'];?>" title="<?php echo $description ?>"><?php echo $titel ;?></a></td>
 		<td><a href="./meta_art.php?id=<?php echo $extra_arr['ID'];?>"><?php echo $extra_arr['waarde'] ?></a></td>
 	</tr>
 <?php
