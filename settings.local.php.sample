@@ -13,4 +13,7 @@ define ('CONSUMER_KEY', 'consumer_key');
 define ('CONSUMER_SECRET', 'consumer_secret');
 define ('OAUTH_KEY', 'oauth_key');
 define ('OAUTH_SECRET', 'oauth_secret');
+
+// application constants
+define ('ITEMS_PER_PAGE', 25);
 ?>

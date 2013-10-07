@@ -116,6 +116,21 @@ ul#topmenu li ul li a:hover > div {
 	background: #9ECECA;
 	}
 
+ul#pager {
+	margin: 10px;
+	padding: 5px;
+}
+ul#pager li {
+	margin: 0 5px;
+	padding: 0;
+	display: inline;
+	float: left;
+	width: 20px;
+	color: #000;
+	background:  #FFF899;
+	text-align: center;
+	}
+
 footer {
 	margin: 0;
 	background: #eee;

@@ -12,8 +12,17 @@
 <?php
 require_once('settings.local.php');
 include('db.php');
+$count_res = mysql_query('select count(*) as amount from artikelen');
+$count_arr = mysql_fetch_array($count_res);
+$tot_row = $count_arr['amount'];
+$start = 0;
+if(isset($_GET['page']))
+{
+	$page = (int)$_GET['page'];
+	$start = ($page - 1) * ITEMS_PER_PAGE;
+}
 $i = 0;
-$res = mysql_query('select * from artikelen order by created_at desc');
+$res = mysql_query('select * from artikelen order by created_at desc limit '.$start.','.ITEMS_PER_PAGE);
 ?>
 		<h1>Artikelen van <a href="http://decorrespondent.nl/">de Correspondent</a> gevonden op Twitter</h1>
 <?php include ('menu.php'); ?>
@@ -44,6 +53,19 @@ while($row = mysql_fetch_array($res) )
 }
 ?>
 </table>
+<ul id="pager">
+	<?php
+	// how many pages?
+	$pages = ceil($tot_row / ITEMS_PER_PAGE);
+	$i = 0;
+	while ($i < $pages)
+	{
+		$page = $i + 1;
+		echo '<li><a href="./?page='.$page.'">'.$page.'</a></li>';
+		$i++;
+	}
+	?>
+</ul>
 <?php include('footer.php') ?>
 </body>
 <?php @include('ga.inc.php') ?>
