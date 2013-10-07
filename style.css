@@ -120,6 +120,11 @@ ul#pager {
 	margin: 10px;
 	padding: 5px;
 }
+#meta_art ul#pager {
+	clear:left;
+	float: left;
+	max-width: 60%;
+	}
 ul#pager li {
 	margin: 0 5px;
 	padding: 0;

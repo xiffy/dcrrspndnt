@@ -20,6 +20,7 @@ if(isset($_GET['page']))
 {
 	$page = (int)$_GET['page'];
 	$start = ($page - 1) * ITEMS_PER_PAGE;
+	if($start < 0) $start = 0;
 }
 $i = 0;
 $res = mysql_query('select * from artikelen order by created_at desc limit '.$start.','.ITEMS_PER_PAGE);

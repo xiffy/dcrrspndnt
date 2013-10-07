@@ -13,6 +13,18 @@ $title_by_in = $mode == 'author' ? 'door' : 'in de sectie';
 $th_extra = $mode == 'author' ? 'sectie' : 'auteur';
 $th_related = $mode == 'author' ? 'auteurs' : 'secties';
 $extra_query_var = $mode == 'author' ? 'article:section' : 'article:author';
+
+// paging dr. beat:
+$count_res = mysql_query('select count(artikelen.*) as amount from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.meta_id = '.$meta_id);
+$count_arr = mysql_fetch_array($count_res);
+$tot_row = $count_arr['amount'];
+$start = 0;
+if(isset($_GET['page']))
+{
+	$page = (int)$_GET['page'];
+	$start = ($page - 1) * ITEMS_PER_PAGE;
+	if($start < 0) $start = 0;
+}
 ?>
 <html>
 	<head>
@@ -20,7 +32,7 @@ $extra_query_var = $mode == 'author' ? 'article:section' : 'article:author';
 		<link rel="stylesheet" href="./style.css" />
 		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
 	</head>
-	<body>
+	<body id="meta_art">
 		<h1>Artikelen geschreven <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde']?></h1>
 <?php include('menu.php')?>
 		<div class="clear"></div>
@@ -32,7 +44,7 @@ $extra_query_var = $mode == 'author' ? 'article:section' : 'article:author';
 			</tr>
 <?php
 $i = 0;
-$art_res = mysql_query ('select artikelen.* from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.meta_id = '.$meta_id.' order by created_at desc');
+$art_res = mysql_query ('select artikelen.* from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.meta_id = '.$meta_id.' order by created_at desc limit '.$start.','.ITEMS_PER_PAGE);
 while($row = mysql_fetch_array($art_res))
 {
 	$og = unserialize(stripslashes($row['og']));
@@ -53,6 +65,20 @@ while($row = mysql_fetch_array($art_res))
 
 ?>
 		</table>
+		<ul id="pager">
+	<?php
+	// how many pages?
+	$pages = ceil($tot_row / ITEMS_PER_PAGE);
+	$i = 0;
+	while ($i < $pages)
+	{
+		$page = $i + 1;
+		echo '<li><a href="./?page='.$page.'">'.$page.'</a></li>';
+		$i++;
+	}
+	?>
+		</ul>
+
 		<table class="related">
 			<tr><th>Alle <?php echo $th_related;?></th></tr>
 <?php
