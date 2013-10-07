@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Dcrrspndnt by xiffy</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/xiffy/dcrrspndnt">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Dcrrspndnt</h1>
+            <h2>De Correspondentbot, zoekt op twitter links naar artikelen op De Correspondent (http://decorrespondent.nl/), indien een nieuw, gedeeld artikel wordt gevonden stuurt de bot een request voor dat artikel op de correspondent. Vervolgens leest de bot de open-graph informatie en slaat die bij het gevonden artikel op.</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/xiffy/dcrrspndnt/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/xiffy/dcrrspndnt/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>
+<a name="dcrrspndnt" class="anchor" href="#dcrrspndnt"><span class="octicon octicon-link"></span></a>dcrrspndnt</h1>
+
+<p>De Correspondentbot, zoekt op twitter links naar artikelen op De Correspondent (<a href="http://decorrespondent.nl/">http://decorrespondent.nl/</a>), indien een nieuw, gedeeld artikel wordt gevonden stuurt de bot een request voor dat artikel op de correspondent. Vervolgens leest de bot de open-graph informatie en slaat die bij het gevonden artikel op.</p>
+
+<p>preview: <a href="http://molecule.nl/decorrespondent/">http://molecule.nl/decorrespondent/</a></p>
+
+<h2>
+<a name="installatie" class="anchor" href="#installatie"><span class="octicon octicon-link"></span></a>Installatie:</h2>
+
+<ul>
+<li>checkout de repo</li>
+<li>kopieer settings.local.php.sample naar settings.local.php</li>
+<li>optioneel kopieer ga.inc.php.sample naar ga.inc.php</li>
+<li>wijzig de waardes in beide bestanden</li>
+<li>maak de mysql database aan</li>
+<li>draai create-db.sql om de tabellen aan te maken</li>
+<li>voeg bot.php toe aan je crontab (eens per 10 minuten is meer dan genoeg) bijv:</li>
+</ul><p>(crontab entry)</p>
+
+<p>*/10 * * * * cd /var/www/[xxx]/[xxx]/decorrespondent; php bot.php 1&gt;&gt;/tmp/correspondent.out 2&gt;&amp;1</p>
+
+<p>In de data directorie staat een bestand some-data.sql, je kunt deze importeren in je database zodat je alvast een aantal artikel links en meta data hebt verzameld. Hiermee kan je je website bekijken zonder dat je de bot voor de eerste keer hebt opgestart. De data gaat over de artikelen die vóór 6 oktober zijn verschenen. Als ik een verse datadump wegschrijf zal de datum in deze README dat aangeven.</p>
+
+<p>open index.php in de Browser en begin te lezen.</p>
+
+<p>Dit project maakt gebruik van simple_html_dom.php en oAuth</p>
+
+<h1></h1>
+
+<p>Dit projectje is een proeve van bekwaamheid, vind je de artikelen van de Correspondent leuk, overweeg dan een abonnement
+<a href="http://decorrespondent.nl/">http://decorrespondent.nl/</a></p>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/xiffy">xiffy</a> can be found on <a href="https://github.com/xiffy/dcrrspndnt">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-1212471-15");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
