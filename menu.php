@@ -26,4 +26,7 @@ while($row = mysql_fetch_array($r))
 ?>
 		</ul>
 	</li>
+	<li class="small">
+		<a href="./rss.php" title="RSS Feed"><strong>RSS </strong><img src="img/ikoon.rss.png" /></a>
+	</li>
 </ul>

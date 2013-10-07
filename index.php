@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		<title>de correspondent, de artikelen</title>
 		<link rel="stylesheet" href="./style.css" />
+		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
 	</head>
 	<body>
 

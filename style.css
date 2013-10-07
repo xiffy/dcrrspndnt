@@ -79,10 +79,14 @@ ul#topmenu {
 #topmenu li {
 	margin: 0;
 	padding 0;
-	width: 200px;
+	width: 170px;
 	display: inline;
 	float: left;
 	}
+#topmenu li.small {
+	width: 80px;
+	}
+
 #topmenu li li {
 	width: 250px;
 	}
