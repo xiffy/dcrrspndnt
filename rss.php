@@ -16,8 +16,14 @@ echo ' version="1.0"?>'; ?>
 <?php
 require_once('settings.local.php');
 include('db.php');
+$query = 'select * from artikelen order by created_at desc limit 0,50';
+if (isset($_GET['id']))
+{
+	$meta_id = (int) $_GET['id'];
+	$query = 'select artikelen.* from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.meta_id = '.$meta_id.' order by created_at desc limit 0,50';
+}
 $i = 0;
-$res = mysql_query('select * from artikelen order by created_at desc limit 0,50');
+$res = mysql_query($query);
 while($row = mysql_fetch_array($res) )
 {
 	$og = unserialize(stripslashes($row['og']));

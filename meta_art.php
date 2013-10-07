@@ -73,7 +73,7 @@ while($row = mysql_fetch_array($art_res))
 	while ($i < $pages)
 	{
 		$page = $i + 1;
-		echo '<li><a href="./?page='.$page.'">'.$page.'</a></li>';
+		echo '<li><a href="./meta_art.php?id='.$meta_id.'&amp;page='.$page.'">'.$page.'</a></li>';
 		$i++;
 	}
 	?>
