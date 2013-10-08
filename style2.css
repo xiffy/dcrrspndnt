@@ -127,7 +127,20 @@ ul#topmenu li ul li a:hover > div {
 	color: #000;
 	background: #9ECECA;
 	}
-
+.search_box {
+	width: 300px;
+	background: #fff;
+	margin: 10px auto;
+	padding: 5px;
+	}
+label {
+	font-weight: bold;
+	}
+.search_box input[type=text] {
+	border: 1px solid #444;
+	padding: 2px 5px;
+	margin: 1px 5px;
+	}
 ul#pager {
 	margin: 10px auto;
 	padding: 5px;

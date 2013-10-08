@@ -69,6 +69,7 @@ while($row = mysql_fetch_array($res) )
 	}
 	?>
 		</ul>
+<?php include('search_box.php') ?>
 	</div>
 <?php include('footer.php') ?>
 </body>

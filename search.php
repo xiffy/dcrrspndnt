@@ -53,6 +53,7 @@ while($row = mysql_fetch_array($res) )
 }
 ?>
 	</table>
+<?php include('search_box.php') ?>
 </div>
 <?php include('footer.php') ?>
 </body>

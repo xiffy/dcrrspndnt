@@ -96,7 +96,9 @@ while($row = mysql_fetch_array($art_res))
 			}
 ?>
 		</table>
-
+<div class="center">
+<?php include('search_box.php'); ?>
+</div>
 <?php include('footer.php') ?>
 	</body>
 <?php @include('ga.inc.php'); ?>
