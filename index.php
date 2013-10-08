@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>de correspondent, de artikelen</title>
-		<link rel="stylesheet" href="./style.css" />
+		<link rel="stylesheet" href="./style2.css" />
 		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
 	</head>
 	<body>
@@ -27,6 +27,7 @@ $res = mysql_query('select * from artikelen order by created_at desc limit '.$st
 ?>
 		<h1>Artikelen van <a href="http://decorrespondent.nl/">de Correspondent</a> gevonden op Twitter</h1>
 <?php include ('menu.php'); ?>
+		<div class="center">
 		<table>
 			<tr>
 				<th>Opgedoken</th><th>Titel / Artikel</th><th>Auteur</th><th>Sectie</th>
@@ -43,18 +44,19 @@ while($row = mysql_fetch_array($res) )
 	$section = mysql_fetch_array($section_res);
 	?>
 
-	<tr <?php if($i % 2 == 1) echo 'class="odd"'?>>
-		<td><?php echo substr($row['created_at'],8,2); echo '-'.substr($row['created_at'],5,2).' '.substr($row['created_at'],11,5) ?></td>
-		<td><strong><a href="<?php echo $row['share_url'];?>" title="<?php echo $description ?>"><?php echo $titel ;?></a></strong></td>
-		<td><a href="./meta_art.php?id=<?php echo $author['ID'];?>" title="alle artikelen van deze auteur"><?php echo $author['waarde'];?></a></td>
-		<td><a href="./meta_art.php?id=<?php echo $section['ID'];?>" title="alle artikelen in deze sectie"><?php echo $section['waarde'];?></a></td>
-	</tr>
+			<tr <?php if($i % 2 == 1) echo 'class="odd"'?>>
+				<td><?php echo substr($row['created_at'],8,2); echo '-'.substr($row['created_at'],5,2).' '.substr($row['created_at'],11,5) ?></td>
+				<td><strong><a href="<?php echo $row['share_url'];?>" title="<?php echo $description ?>"><?php echo $titel ;?></a></strong></td>
+				<td><a href="./meta_art.php?id=<?php echo $author['ID'];?>" title="alle artikelen van deze auteur"><?php echo $author['waarde'];?></a></td>
+				<td><a href="./meta_art.php?id=<?php echo $section['ID'];?>" title="alle artikelen in deze sectie"><?php echo $section['waarde'];?></a></td>
+			</tr>
 	<?php
 	$i++;
 }
 ?>
-</table>
-<ul id="pager">
+		</table>
+		<ul id="pager">
+			<li class="text">pagina:</li>
 	<?php
 	// how many pages?
 	$pages = ceil($tot_row / ITEMS_PER_PAGE);
@@ -62,11 +64,12 @@ while($row = mysql_fetch_array($res) )
 	while ($i < $pages)
 	{
 		$page = $i + 1;
-		echo '<li><a href="./?page='.$page.'">'.$page.'</a></li>';
+		echo '			<li><a href="./?page='.$page.'">'.$page.'</a></li>';
 		$i++;
 	}
 	?>
-</ul>
+		</ul>
+	</div>
 <?php include('footer.php') ?>
 </body>
 <?php @include('ga.inc.php') ?>

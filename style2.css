@@ -1,15 +1,14 @@
 ﻿body {
-	background: #9ECECA;
+	background: #eee;
 	font-family: tahoma, "Trebuchet MS", Helvetica, sans-serif;
 	font-size: 12px;
-	color: #666;
+	color: #444;
 	padding: 0;
 	margin: 0;
 }
 a {
 	color: #000;
 	text-decoration: none;
-	border-bottom: 1px dotted #000;
 	}
 a:hover,
 a:active {
@@ -23,27 +22,32 @@ table {
 	margin: 0 auto;
 	font-size: 14px;
 	border-spacing: 0;
+	border: 1px solid #ccc;
 	}
 td {
 	padding: 2px 5px;
 	}
 tr.odd {
-	background: #FFF899;
+	background: #efefef;
 	}
 th {
 	background: #eee;
 	}
 h1 {
 	width: auto;
-	color: #222;
-	background-color: #DF5B57;
+	color: #ccc;
+	background-color: #232323;
 	padding: 5px 10px 30px 10px;
 	margin: 0 0 10px 0;
+	}
+h1 a {
+	color: #fff;
 	}
 .meta-table {
 	float: left;
 	max-width: 60%;
-	margin-top: 5px;
+	min-width: 60%;
+	margin: 0 10px;
 	}
 .center {
 	width: 100%;
@@ -97,14 +101,14 @@ ul#topmenu ul {
 	display: none;
 	}
 ul#topmenu ul li {
-	background: rgba(223, 91, 87, 0.9);
+	background: rgba(35, 35, 35, 0.9);
 	padding: 0 10px;
 	width: 300px;
 	height: 25px;
 	margin: 0 -10px;
 	}
 ul#topmenu ul li:last-child {
-	border-bottom:5px solid rgba(223, 91, 87, 0.9);
+	border-bottom:5px solid rgba(35, 35, 35, 0.9);
 	}
 ul#topmenu li:hover > ul {
 	display: block;
@@ -122,6 +126,8 @@ ul#topmenu li ul li a:hover > div {
 ul#pager {
 	margin: 10px auto;
 	padding: 5px;
+	background-color: #fff;
+	height: 18px;
 }
 #meta_art ul#pager {
 	clear:left;
@@ -134,18 +140,30 @@ ul#pager li {
 	display: inline;
 	float: left;
 	width: 20px;
-	color: #000;
-	background:  #FFF899;
+	color: #fff;
+	background:  #000;
 	text-align: center;
 	}
-
+ul#pager li a {
+	color: #fff;
+	font-weight: bold;
+	}
+ul#pager li.text {
+	background: transparent;
+	color: #000;
+	widht: 150px;
+	margin-right: 20px;
+	}
 footer {
 	margin: 0;
-	background: #eee;
-	color: #666;
+	background: #555;
+	color: #ddd;
 	min-height: 200px;
 	padding-top: 20px;
 	}
 footer p {
 	padding: 0 10px;
+	}
+footer a {
+	color: #fff;
 	}
