@@ -42,6 +42,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 		{
 			if (strstr($share, 'http://'))
 				$share = str_replace('http:', 'https:', $share);
+
 			$parsed = parse_url ($share);
 			if (isset($parsed['path']))
 			{
