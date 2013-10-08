@@ -46,7 +46,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 			$parsed = parse_url ($share);
 			if (isset($parsed['path']))
 			{
-				if (! strstr($parsed['host'], 'decorrespondent.nl') || $parsed['host'] == 'blog.decorrespondent.nl')
+				if (! strstr($parsed['host'], 'decorrespondent.nl') || $parsed['host'] == 'blog.decorrespondent.nl' || $parsed['host'] == 'dynamic.decorrespondent.nl')
 				{
 					echo 'skipping: '.$share."\n";
 					continue;
