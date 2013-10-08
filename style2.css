@@ -24,6 +24,10 @@ table {
 	border-spacing: 0;
 	border: 1px solid #ccc;
 	}
+tr:hover,
+tr.odd:hover {
+	background: #9ECECA;
+	}
 td {
 	padding: 2px 5px;
 	}
@@ -149,6 +153,12 @@ ul#pager li {
 ul#pager li a {
 	color: #fff;
 	font-weight: bold;
+	}
+ul#pager li:hover {
+	background: #9ECECA;
+	}
+ul#pager li a:hover {
+	color: #000;
 	}
 ul#pager li.text {
 	background: transparent;
