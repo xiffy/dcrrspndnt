@@ -37,6 +37,7 @@ h1 {
 	width: auto;
 	color: #ccc;
 	background-color: #232323;
+	box-shadow: 0 -20px 50px #555 inset;
 	padding: 5px 10px 30px 10px;
 	margin: 0 0 10px 0;
 	}
@@ -101,14 +102,14 @@ ul#topmenu ul {
 	display: none;
 	}
 ul#topmenu ul li {
-	background: rgba(35, 35, 35, 0.9);
+	background: rgb(35, 35, 35);
 	padding: 0 10px;
 	width: 300px;
 	height: 25px;
 	margin: 0 -10px;
 	}
 ul#topmenu ul li:last-child {
-	border-bottom:5px solid rgba(35, 35, 35, 0.9);
+	border-bottom:5px solid rgb(35, 35, 35);
 	}
 ul#topmenu li:hover > ul {
 	display: block;
@@ -127,7 +128,7 @@ ul#pager {
 	margin: 10px auto;
 	padding: 5px;
 	background-color: #fff;
-	height: 18px;
+	height: 24px;
 }
 #meta_art ul#pager {
 	clear:left;
@@ -143,6 +144,7 @@ ul#pager li {
 	color: #fff;
 	background:  #000;
 	text-align: center;
+	font-size: 16px;
 	}
 ul#pager li a {
 	color: #fff;
@@ -151,8 +153,7 @@ ul#pager li a {
 ul#pager li.text {
 	background: transparent;
 	color: #000;
-	widht: 150px;
-	margin-right: 20px;
+	margin-right: 33px;
 	}
 footer {
 	margin: 0;
