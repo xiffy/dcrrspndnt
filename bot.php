@@ -83,7 +83,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 					// stuur er ook een tweet uit op het speciale twitter account:
 					if (SEND_TWEETS == 1)
 					{
-						$tw_text = 'Nieuw artikel gevonden: '.$og['article:title'].' '.$share;
+						$tw_text = 'Versch!: '.$og['article:title'].' '.$share;
 						echo "sending tweet: {$tw_text} \n";
 						$connection = new TwitterOAuth(
 																	OUTGOING_CONSUMER_KEY,
