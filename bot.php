@@ -53,7 +53,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 				}
 				$path = $parsed['path'];
 				$path = explode('/', $path);
-				if(isset($path[2]))
+				if(isset($path[2]) && isset($path[3]))
 				{
 					$path = $path[1].'/'.$path[2];
 					$clean = $parsed['scheme'].'://'.$parsed['host'].'/'.$path;
