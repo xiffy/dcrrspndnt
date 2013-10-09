@@ -191,3 +191,8 @@ footer p {
 footer a {
 	color: #fff;
 	}
+footer .follow-me {
+	display: inline;
+	float: right;
+	margin: 10px;
+	}
