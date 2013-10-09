@@ -39,7 +39,7 @@ if(isset($_GET['page']))
 
 		<table class="meta-table">
 			<tr>
-				<th>Opgedoken</th>
+				<th>Gepubliceerd</th>
 				<th>Title / Artikel</th>
 				<th><?php echo $th_extra; ?></th>
 			</tr>

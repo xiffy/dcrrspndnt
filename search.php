@@ -24,7 +24,7 @@ $display_string = htmlspecialchars($_GET['q']);
 		<div class="center">
 		<table>
 			<tr>
-				<th>Opgedoken</th><th>Titel / Artikel</th><th>Auteur</th><th>Sectie</th>
+				<th>Gepubliceerd</th><th>Titel / Artikel</th><th>Auteur</th><th>Sectie</th>
 			</tr>
 <?php
 // teller-query toevoegen, pager voeden!
