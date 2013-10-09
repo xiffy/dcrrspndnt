@@ -25,7 +25,7 @@ if(isset($_GET['page']))
 $i = 0;
 $res = mysql_query('select * from artikelen order by created_at desc limit '.$start.','.ITEMS_PER_PAGE);
 ?>
-		<h1>Artikelen van <a href="http://decorrespondent.nl/">de Correspondent</a> gevonden op Twitter</h1>
+		<h1>Artikelen van <a href="http://decorrespondent.nl/">de Correspondent</a> gevonden op Twitter<a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a></h1>
 <?php include ('menu.php'); ?>
 		<div class="center">
 		<table>

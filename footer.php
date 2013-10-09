@@ -1,4 +1,4 @@
-﻿<footer>
+﻿<footer id="footer">
 	<div class="follow-me">
 		<a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a>
 		<p>De correspondent twitter-bot stuurt voor elk nieuw gevonden artikel een tweet de wereld in, niet meer, niet minder.</p>
