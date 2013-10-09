@@ -42,9 +42,7 @@ while($row = mysql_fetch_array($res) )
 	$author = mysql_fetch_array($auth_res);
 	$section_res = mysql_query('select * from meta where meta.waarde = "'.$og['article:section'].'"');
 	$section = mysql_fetch_array($section_res);
-	$pubtime_res = mysql_query('select * from meta where meta.waarde = "'.$og['article:published_time'].'"');
-	$pubtime = mysql_fetch_array($pubtime_res);
-	$display_time = isset($pubtime['waarde']) ? strftime('%e %b %H:%M', $pubtime['waarde']) : substr($row['created_at'],8,2).'-'.substr($row['created_at'],5,2).' '.substr($row['created_at'],11,5);
+	$display_time = isset($og['article:published_time']) ? strftime('%e %b %H:%M', $og['article:published_time']) : substr($row['created_at'],8,2).'-'.substr($row['created_at'],5,2).' '.substr($row['created_at'],11,5);
 	$found_at = substr($row['created_at'],8,2).'-'.substr($row['created_at'],5,2).' '.substr($row['created_at'],11,5);
 	?>
 
