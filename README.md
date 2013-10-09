@@ -19,7 +19,7 @@ Installatie:
 
 */10 * * * * cd /var/www/[xxx]/[xxx]/decorrespondent; php bot.php 1>>/tmp/correspondent.out 2>&1
 
-In de data directorie staat een bestand some-data.sql, je kunt deze importeren in je database zodat je alvast een aantal artikel links en meta data hebt verzameld. Hiermee kan je je website bekijken zonder dat je de bot voor de eerste keer hebt opgestart. De data gaat over de artikelen die voor 6 oktober zijn verschenen. Als ik een verse datadump wegschrijf zal de datum in deze README dat aangeven.
+In de data directorie staat een bestand some-data.sql, je kunt deze importeren in je database zodat je alvast een aantal artikel links en meta data hebt verzameld. Hiermee kan je je website bekijken zonder dat je de bot voor de eerste keer hebt opgestart. De data gaat over de artikelen die voor 9 oktober zijn verschenen. Als ik een verse datadump wegschrijf zal de datum in deze README dat aangeven.
 
 open index.php in de Browser en begin te lezen.
 
