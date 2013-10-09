@@ -79,6 +79,32 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 
 					echo 'inserting: insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.substr($og,0,20).'")'."\n";
 					mysql_query('insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.addslashes($og).'")');
+
+					// stuur er ook een tweet uit op het speciale twitter account:
+					if (SEND_TWEETS == 1)
+					{
+						$tw_text = 'Nieuw artikel gevonden: '.$og['article:title'].' '.$share;
+						echo "sending tweet: {$tw_text} \n";
+						$connection = new TwitterOAuth(
+																	OUTGOING_CONSUMER_KEY,
+																	OUTGOING_CONSUMER_SECRET,
+																	OUTGOING_OAUTH_KEY,
+																	OUTGOING_OAUTH_SECRET);
+						$connection->useragent = 'dcrrspndt tweet-bot';
+						$connection->post(
+							'https://api.twitter.com/1.1/statuses/update.json',
+							array(
+								'status' => $tw_text,
+								'source' => 'molecule.nl/decorrespondent',
+								'callback_url' => 'http://molecule.nl/decorrespondent'
+							)
+						);
+						if (strcmp($connection->http_code, '200') == 0)
+							echo "Tweet sent \n";
+						else
+							echo "Posting failed. Twitter down?".$connection->http_code."\n";
+
+					}
 				}
 			}
 		}

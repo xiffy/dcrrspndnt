@@ -14,6 +14,19 @@ define ('CONSUMER_SECRET', 'consumer_secret');
 define ('OAUTH_KEY', 'oauth_key');
 define ('OAUTH_SECRET', 'oauth_secret');
 
+// outgoing twitterkeys
+define ('OUTGOING_CONSUMER_KEY' , 'outgoing_consumer_key');
+define ('OUTGOING_CONSUMER_SECRET', 'outgoing_consumer_secret');
+define ('OUTGOING_OAUTH_KEY', 'outgoing_oauth_key');
+define ('OUTGOING_OAUTH_SECRET', 'outgoing_oauth_secret');
+
+
 // application constants
 define ('ITEMS_PER_PAGE', 25);
+
+setlocale(LC_ALL, 'nl_NL');
+
+// outgoing tweet-bot
+define ('SEND_TWEETS', 1);
+
 ?>
