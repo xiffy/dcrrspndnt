@@ -195,4 +195,10 @@ footer .follow-me {
 	display: inline;
 	float: right;
 	margin: 10px;
+	width: 200px;
+	background: #000;
+	}
+.follow-me .twitter-follow-button {
+	margin-left:20px;
+	margin-top: 10px;
 	}
