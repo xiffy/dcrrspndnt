@@ -196,8 +196,8 @@ footer .follow-me {
 	float: right;
 	margin: 10px;
 	width: 200px;
-	background: #fff;
-	color: #333;
+	background: #333;
+	color: #fff;
 	border-radius: 5px;
 	}
 .follow-me .twitter-follow-button {
