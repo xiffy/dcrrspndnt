@@ -75,7 +75,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 							}
 						}
 					}
-					$tweet = $og['article:title']. ' door: '.$og['article:author'];
+					$tweet = $og['title']. ' door: '.$og['article:author'];
 					// nu mogen we serializen
 					$og = serialize($og);
 
@@ -85,8 +85,8 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 					// stuur er ook een tweet uit op het speciale twitter account:
 					if (SEND_TWEETS == 1)
 					{
-						$tw_text = 'Versch!: '.substr($tweet, 0, 140 - 34).' '.$share;
-						// 33 -> 9 + 1 + 24; 'Versch!: ' + spatie + link
+						$tw_text = 'Gespot: '.substr($tweet, 0, 140 - 33).' '.$share;
+						// 33 -> 8 + 1 + 24; 'Gespot: ' + spatie + link
 
 						echo "sending tweet: {$tw_text} \n";
 						$connection = new TwitterOAuth(
