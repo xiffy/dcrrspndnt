@@ -75,6 +75,8 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 							}
 						}
 					}
+					$tweet = $og['article:title']. ' door: '.$og['article:author'];
+					// nu mogen we serializen
 					$og = serialize($og);
 
 					echo 'inserting: insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.substr($og,0,20).'")'."\n";
@@ -83,8 +85,9 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 					// stuur er ook een tweet uit op het speciale twitter account:
 					if (SEND_TWEETS == 1)
 					{
-						$tw_text = 'Versch!: '.substr($og['article:title'], 0, 140 - 34).' '.$share;
+						$tw_text = 'Versch!: '.substr($tweet, 0, 140 - 34).' '.$share;
 						// 33 -> 9 + 1 + 24; 'Versch!: ' + spatie + link
+
 						echo "sending tweet: {$tw_text} \n";
 						$connection = new TwitterOAuth(
 																	OUTGOING_CONSUMER_KEY,
