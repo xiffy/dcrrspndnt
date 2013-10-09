@@ -15,6 +15,10 @@ define ('OAUTH_KEY', 'oauth_key');
 define ('OAUTH_SECRET', 'oauth_secret');
 
 // outgoing twitterkeys
+// this can be the same account as above, be aware that you need to modify your application
+// default an application is read-only, if you want to send tweets as well, you need to make your
+// application read-write and generate new keys!
+
 define ('OUTGOING_CONSUMER_KEY' , 'outgoing_consumer_key');
 define ('OUTGOING_CONSUMER_SECRET', 'outgoing_consumer_secret');
 define ('OUTGOING_OAUTH_KEY', 'outgoing_oauth_key');
@@ -27,6 +31,7 @@ define ('ITEMS_PER_PAGE', 25);
 setlocale(LC_ALL, 'nl_NL');
 
 // outgoing tweet-bot
-define ('SEND_TWEETS', 1);
+// default disabled
+define ('SEND_TWEETS', 0);
 
 ?>
