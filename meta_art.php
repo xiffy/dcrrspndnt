@@ -42,10 +42,12 @@ if(isset($_GET['page']))
 				<th>Gepubliceerd</th>
 				<th>Title / Artikel</th>
 				<th><?php echo $th_extra; ?></th>
+				<th>tweets</th>
 			</tr>
 <?php
 $i = 0;
-$art_res = mysql_query ('select artikelen.* from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.meta_id = '.$meta_id.' order by created_at desc limit '.$start.','.ITEMS_PER_PAGE);
+$art_res = mysql_query ('select artikelen.*, count(tweets.id) as tweet_count from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id left outer join tweets on tweets.art_id = artikelen.ID where meta_artikel.meta_id = '.$meta_id.' group by artikelen.ID order by created_at desc limit '.$start.','.ITEMS_PER_PAGE);
+
 while($row = mysql_fetch_array($art_res))
 {
 	$og = unserialize(stripslashes($row['og']));
@@ -61,6 +63,7 @@ while($row = mysql_fetch_array($art_res))
 		<td><abbr title="gevonden op: <?php echo $found_at;?>"><?php echo $display_time ?></abbr></td>
 		<td><a href="<?php echo $row['share_url'];?>" title="<?php echo $description ?>"><?php echo $titel ;?></a></td>
 		<td><a href="./meta_art.php?id=<?php echo $extra_arr['ID'];?>"><?php echo $extra_arr['waarde'] ?></a></td>
+		<td><?php echo $row['tweet_count'];?></td>
 	</tr>
 <?php
 	$i++;

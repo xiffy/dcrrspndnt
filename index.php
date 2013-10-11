@@ -23,14 +23,14 @@ if(isset($_GET['page']))
 	if($start < 0) $start = 0;
 }
 $i = 0;
-$res = mysql_query('select * from artikelen order by created_at desc limit '.$start.','.ITEMS_PER_PAGE);
+$res = mysql_query('select artikelen.*, count(tweets.id) as tweet_count from artikelen left outer join tweets on tweets.art_id = artikelen.id group by artikelen.id order by created_at desc limit '.$start.','.ITEMS_PER_PAGE);
 ?>
 		<h1>Artikelen van <a href="http://decorrespondent.nl/">de Correspondent</a> gevonden op Twitter<a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a></h1>
 <?php include ('menu.php'); ?>
 		<div class="center">
 		<table>
 			<tr>
-				<th>Gepubliceerd</th><th>Titel / Artikel</th><th>Auteur</th><th>Sectie</th>
+				<th>Gepubliceerd</th><th>Titel / Artikel</th><th>Auteur</th><th>Sectie</th><th>tweets</th>
 			</tr>
 <?php
 while($row = mysql_fetch_array($res) )
@@ -51,6 +51,7 @@ while($row = mysql_fetch_array($res) )
 				<td><strong><a href="<?php echo $row['share_url'];?>" title="<?php echo $description ?>"><?php echo $titel ;?></a></strong></td>
 				<td><a href="./meta_art.php?id=<?php echo $author['ID'];?>" title="alle artikelen van deze auteur"><?php echo $author['waarde'];?></a></td>
 				<td><a href="./meta_art.php?id=<?php echo $section['ID'];?>" title="alle artikelen in deze sectie"><?php echo $section['waarde'];?></a></td>
+				<td><?php echo $row['tweet_count']?></td>
 			</tr>
 	<?php
 	$i++;
