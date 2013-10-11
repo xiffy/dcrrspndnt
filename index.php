@@ -22,8 +22,16 @@ if(isset($_GET['page']))
 	$start = ($page - 1) * ITEMS_PER_PAGE;
 	if($start < 0) $start = 0;
 }
+$order_by = ' order by created_at desc ';
+$qsa = '';
+if(isset($_GET['order']) && $_GET['order'] == 'tweets')
+{
+	$order_by = ' order by tweet_count desc ';
+	$qsa = '&amp;order=tweets';
+}
+
 $i = 0;
-$res = mysql_query('select artikelen.*, count(tweets.id) as tweet_count from artikelen left outer join tweets on tweets.art_id = artikelen.id group by artikelen.id order by created_at desc limit '.$start.','.ITEMS_PER_PAGE);
+$res = mysql_query('select artikelen.*, count(tweets.id) as tweet_count from artikelen left outer join tweets on tweets.art_id = artikelen.id group by artikelen.id '.$order_by.' limit '.$start.','.ITEMS_PER_PAGE);
 ?>
 		<h1>Artikelen van <a href="http://decorrespondent.nl/">de Correspondent</a> gevonden op Twitter<a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a></h1>
 <?php include ('menu.php'); ?>
@@ -67,7 +75,7 @@ while($row = mysql_fetch_array($res) )
 	while ($i < $pages)
 	{
 		$page = $i + 1;
-		echo '			<li><a href="./?page='.$page.'">'.$page.'</a></li>';
+		echo '			<li><a href="./?page='.$page.$qsa.'">'.$page.'</a></li>';
 		$i++;
 	}
 	?>
