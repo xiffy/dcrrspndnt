@@ -24,10 +24,15 @@ if(isset($_GET['page']))
 }
 $order_by = ' order by created_at desc ';
 $qsa = '';
+$th_pubdate = '<th>Gepubliceerd &#9660</th>';
+$sep = strstr($_SERVER['REQUEST_URI'], '?') ? '&amp;' : '?';
+$th_tweets = '<th class="sortable"><a href="'.$_SERVER['REQUEST_URI'].$sep.'order=tweets" title="Sorteer op aantal maal gedeeld" >tweets</a></th>';
 if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 {
 	$order_by = ' order by tweet_count desc ';
-	$qsa = '&amp;order=tweets';
+	$qsa = '&amp;order=tweets'; // voor de pager
+	$th_pubdate = '<th class="sortable"><a href="./?page='.$page.'" title="Sorteer op publicatiedatum">Gepubliceerd</a></th>';
+$th_tweets = '<th>tweets &#9660</th>';
 }
 
 $i = 0;
@@ -38,7 +43,7 @@ $res = mysql_query('select artikelen.*, count(tweets.id) as tweet_count from art
 		<div class="center">
 		<table>
 			<tr>
-				<th>Gepubliceerd</th><th>Titel / Artikel</th><th>Auteur</th><th>Sectie</th><th>tweets</th>
+				<?php echo $th_pubdate;?><th>Titel / Artikel</th><th>Auteur</th><th>Sectie</th><?php echo $th_tweets;?>
 			</tr>
 <?php
 while($row = mysql_fetch_array($res) )
