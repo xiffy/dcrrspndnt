@@ -59,7 +59,20 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 					$query = 'select * from artikelen where clean_url = "'.$clean.'"';
 					$res = mysql_query($query);
 					if(mysql_num_rows($res))
+					{
+						if (COUNT_TWEETS == 1)
+						{
+							$art_row = mysql_fetch_array($res);
+							$tweet_res = mysql_query('select * from tweets where art_id = '.$art_row['ID'].' and tweet_id = "'.$tweet->id.'"');
+							if (mysql_num_rows($tweet_res) == 0)
+							{
+								echo 'counting tweet '.$tweet->id."\n";
+								mysql_query('insert into tweets (tweet_id, art_id) values ("'.$tweet->id.'", '.$art_row['ID'].')');
+							}
+						}
+
 						continue; // hebben we al!
+					}
 					// even de url opvragen om de auteur te vinden
 					$html = file_get_html($share);
 					$og = array();
@@ -80,6 +93,12 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 
 					echo 'inserting: insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.substr($og,0,20).'")'."\n";
 					mysql_query('insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.addslashes($og).'")');
+
+					if (COUNT_TWEETS == 1)
+					{
+						echo 'counting tweet '.$tweet->id."\n";
+						mysql_query('insert into tweets (tweet_id, art_id) values ("'.$tweet->id.'", '.mysql_insert_id().')');
+					}
 
 					// stuur er ook een tweet uit op het speciale twitter account:
 					if (SEND_TWEETS == 1)

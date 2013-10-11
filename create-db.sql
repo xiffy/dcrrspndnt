@@ -63,6 +63,19 @@ CREATE TABLE IF NOT EXISTS `meta_artikel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Data exporteren was gedeselecteerd
+
+
+-- Structuur van  tabel decorrespondent.tweets wordt geschreven
+CREATE TABLE IF NOT EXISTS `tweets` (
+  `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `art_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `tweet_id` varchar(255) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`),
+  KEY `art_id` (`art_id`),
+  KEY `tweet_id` (`tweet_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Om accuraat te kunnen tellen';
+
+-- Data exporteren was gedeselecteerd
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

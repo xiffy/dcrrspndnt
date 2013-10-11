@@ -33,5 +33,6 @@ setlocale(LC_ALL, 'nl_NL');
 // outgoing tweet-bot
 // default disabled
 define ('SEND_TWEETS', 0);
-
+// if enabled we count how many times a story has been tweeted
+define ('COUNT_TWEETS' ,0);
 ?>
