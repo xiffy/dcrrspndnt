@@ -23,8 +23,7 @@ $oauth = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, OAUTH_KEY, OAUTH_SECRET
 $oauth->useragent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.9) Gecko/20071025 Firefox/13.6.0.9';
 
 $tweets_found = json_decode($oauth->get('http://api.twitter.com/1.1/search/tweets.json',
-array('q' => $query, 'count' => 100, 'since_id' => $since)));
-
+array('q' => $query, 'count' => 100, 'since_id' => $since, 'result_type' => 'recent')));
 if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 	//print_r($tweet->entities->urls);
 	update_since($tweet->id);
@@ -75,7 +74,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 							}
 						}
 					}
-					$tweet = $og['title']. ' door: '.$og['article:author'];
+					$tweet = $og['article:author'] .': '.$og['title'];
 					// nu mogen we serializen
 					$og = serialize($og);
 
@@ -85,8 +84,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 					// stuur er ook een tweet uit op het speciale twitter account:
 					if (SEND_TWEETS == 1)
 					{
-						$tw_text = 'Gespot: '.substr($tweet, 0, 140 - 33).' '.$share;
-						// 33 -> 8 + 1 + 24; 'Gespot: ' + spatie + link
+						$tw_text = substr($tweet, 0, 140 - 25).' '.$share;
 
 						echo "sending tweet: {$tw_text} \n";
 						$connection = new TwitterOAuth(
