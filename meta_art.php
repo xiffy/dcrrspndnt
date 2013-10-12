@@ -28,6 +28,11 @@ if(isset($_GET['page']))
 ?>
 <html>
 	<head>
+		<meta charset="utf-8">
+		<meta name="keywords" content="de correspondent, gedeelde artikelen, twitter, overzicht, gratis">
+		<meta name="description" content="dcrrspndnt, indexer van gedeelde artikelen van De Correspondent, http://decorrespondent.nl", lees alle gedeelde artikelen op twitter gratis via http://molecule.nl/decorrespondent/>
+		<meta name="author" content="xiffy">
+
 		<title>de Correspondent, artikelen <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde'].' ('.$mode.')';?></title>
 		<link rel="stylesheet" href="./style2.css" />
 		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">

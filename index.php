@@ -2,6 +2,9 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<meta name="keywords" content="de correspondent, gedeelde artikelen, twitter, overzicht, gratis">
+		<meta name="description" content="dcrrspndnt, indexer van gedeelde artikelen van De Correspondent, http://decorrespondent.nl", lees alle gedeelde artikelen op twitter gratis via http://molecule.nl/decorrespondent/>
+		<meta name="author" content="xiffy">
 		<title>de correspondent, de artikelen</title>
 		<link rel="stylesheet" href="./style2.css" />
 		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
@@ -24,15 +27,15 @@ if(isset($_GET['page']))
 }
 $order_by = ' order by created_at desc ';
 $qsa = '';
-$th_pubdate = '<th>Gepubliceerd &#9660</th>';
+$th_pubdate = '<th>Gepubliceerd</th>';
 $sep = strstr($_SERVER['REQUEST_URI'], '?') ? '&amp;' : '?';
-$th_tweets = '<th class="sortable"><a href="'.$_SERVER['REQUEST_URI'].$sep.'order=tweets" title="Sorteer op aantal maal gedeeld" >tweets</a></th>';
+$th_tweets = '<th class="sortable"><a href="'.$_SERVER['REQUEST_URI'].$sep.'order=tweets" title="Sorteer op aantal maal gedeeld" >tweets</a>&#9660;</th>';
 if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 {
 	$order_by = ' order by tweet_count desc ';
 	$qsa = '&amp;order=tweets'; // voor de pager
-	$th_pubdate = '<th class="sortable"><a href="./?page='.$page.'" title="Sorteer op publicatiedatum">Gepubliceerd</a></th>';
-$th_tweets = '<th>tweets &#9660</th>';
+	$th_pubdate = '<th class="sortable"><a href="./?page='.$page.'" title="Sorteer op publicatiedatum">Gepubliceerd</a>&#9660;</th>';
+$th_tweets = '<th>tweets</th>';
 }
 
 $i = 0;
