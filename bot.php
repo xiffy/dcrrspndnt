@@ -37,6 +37,12 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 			continue; // hebben we al!
 
 		$share = $url->expanded_url;
+		if(! strstr($share, 'decorrespondent'))
+		{
+			echo $share."\n";
+			$share = unshorten_url($share);
+			echo 'became-> '.$share."\n\n";
+		}
 		if(strstr($share, 'decorrespondent'))
 		{
 			if (strstr($share, 'http://'))
@@ -47,7 +53,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 			{
 				if (! strstr($parsed['host'], 'decorrespondent.nl') || $parsed['host'] == 'blog.decorrespondent.nl' || $parsed['host'] == 'dynamic.decorrespondent.nl')
 				{
-					echo 'skipping: '.$share."\n";
+//					echo 'skipping: '.$share."\n";
 					continue;
 				}
 				$path = $parsed['path'];
@@ -87,7 +93,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 							}
 						}
 					}
-					$tweet = $og['article:author'] .': '.$og['title'];
+					$tweet_text = $og['article:author'] .': '.$og['title'];
 					// nu mogen we serializen
 					$og = serialize($og);
 
@@ -103,7 +109,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 					// stuur er ook een tweet uit op het speciale twitter account:
 					if (SEND_TWEETS == 1)
 					{
-						$tw_text = substr($tweet, 0, 140 - 25).' '.$share;
+						$tw_text = substr($tweet_text, 0, 140 - 25).' '.$share;
 
 						echo "sending tweet: {$tw_text} \n";
 						$connection = new TwitterOAuth(
@@ -129,7 +135,13 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 				}
 			}
 		}
+		else
+		{ // via unshorten kijken of we toch bij de correspondent komen??
+
+		}
 	}
+
+
 }
 // alle meta-waardes wegschrijven in de meta-table voor makkelijker cross-linken:
 // selecteer alle artikelen die geen meta_artikel rows bezitten
@@ -175,4 +187,19 @@ function get_since()
 	$res = mysql_query('select app_value from app_keys where app_key = "since"');
 	$row = mysql_fetch_array($res);
 	return $row['app_value'];
+}
+
+
+function unshorten_url($url) {
+    $ch = curl_init($url);
+    curl_setopt_array($ch, array(
+        CURLOPT_FOLLOWLOCATION => TRUE,  // the magic sauce
+        CURLOPT_RETURNTRANSFER => TRUE,
+        CURLOPT_SSL_VERIFYHOST => FALSE, // suppress certain SSL errors
+        CURLOPT_SSL_VERIFYPEER => FALSE,
+    ));
+    curl_exec($ch);
+    $url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+    curl_close($ch);
+    return $url;
 }
