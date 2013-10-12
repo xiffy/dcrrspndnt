@@ -2,7 +2,7 @@
 -- Host:                         192.168.200.8
 -- Server versie:                5.5.34-log - MySQL Community Server (GPL) by Remi
 -- Server OS:                    Linux
--- HeidiSQL Versie:              8.0.0.4396
+-- HeidiSQL Versie:              8.1.0.4545
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `meta` (
   PRIMARY KEY (`ID`),
   KEY `waarde` (`waarde`),
   KEY `type` (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- Data exporteren was gedeselecteerd
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `meta_artikel` (
   PRIMARY KEY (`ID`),
   KEY `artikel` (`art_id`),
   KEY `meta` (`meta_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- Data exporteren was gedeselecteerd
 
@@ -73,7 +73,19 @@ CREATE TABLE IF NOT EXISTS `tweets` (
   PRIMARY KEY (`ID`),
   KEY `art_id` (`art_id`),
   KEY `tweet_id` (`tweet_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Om accuraat te kunnen tellen';
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Om accuraat te kunnen tellen';
+
+-- Data exporteren was gedeselecteerd
+
+
+-- Structuur van  tabel decorrespondent.unshorten wordt geschreven
+CREATE TABLE IF NOT EXISTS `unshorten` (
+  `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `short_url` varchar(120) NOT NULL DEFAULT '0',
+  `url` varchar(255) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `short_url` (`short_url`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='om geresolvde uri''s eenmalig op te vragen';
 
 -- Data exporteren was gedeselecteerd
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

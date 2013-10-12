@@ -31,17 +31,25 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 	foreach($tweet->entities->urls as $url)
 	{
 		$tco = $url->url;
-		$query = 'select * from artikelen where t_co = "'.$tco.'"';
-		$res = mysql_query($query);
-		if(mysql_num_rows($res))
-			continue; // hebben we al!
 
 		$share = $url->expanded_url;
 		if(! strstr($share, 'decorrespondent'))
 		{
-			echo $share."\n";
-			$share = unshorten_url($share);
-			echo 'became-> '.$share."\n\n";
+			$short = $share;
+			$short_res = mysql_query('select * from unshorten where short_url = "'.$short.'"');
+			if(mysql_num_rows($short_res) == 0)
+			{
+				echo $short."\n";
+				$share = unshorten_url($short);
+				echo 'became-> '.$share."\n\n";
+				// opslaan opdat we deze niet nogmaals opvragen
+				mysql_query('insert into unshorten (short_url, url) values ("'.addslashes($short).'","'.addslashes($share).'")');
+			}
+			else
+			{ // misschien moeten we hem tellen?
+				$short_arr = mysql_fetch_array($short_res);
+				$share = $short_arr['url'];
+			}
 		}
 		if(strstr($share, 'decorrespondent'))
 		{
@@ -135,14 +143,9 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 				}
 			}
 		}
-		else
-		{ // via unshorten kijken of we toch bij de correspondent komen??
-
-		}
 	}
-
-
 }
+
 // alle meta-waardes wegschrijven in de meta-table voor makkelijker cross-linken:
 // selecteer alle artikelen die geen meta_artikel rows bezitten
 $res = mysql_query ('select artikelen.ID as art_id, og from artikelen left outer join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.art_id IS NULL');
@@ -190,16 +193,18 @@ function get_since()
 }
 
 
-function unshorten_url($url) {
-    $ch = curl_init($url);
-    curl_setopt_array($ch, array(
-        CURLOPT_FOLLOWLOCATION => TRUE,  // the magic sauce
-        CURLOPT_RETURNTRANSFER => TRUE,
-        CURLOPT_SSL_VERIFYHOST => FALSE, // suppress certain SSL errors
-        CURLOPT_SSL_VERIFYPEER => FALSE,
-    ));
-    curl_exec($ch);
-    $url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-    curl_close($ch);
-    return $url;
+function unshorten_url($url)
+{
+	$ch = curl_init($url);
+	curl_setopt_array($ch, array(
+                                CURLOPT_FOLLOWLOCATION => TRUE,  // the magic sauce
+                                CURLOPT_RETURNTRANSFER => TRUE,
+                                CURLOPT_SSL_VERIFYHOST => FALSE, // suppress certain SSL errors
+                                CURLOPT_SSL_VERIFYPEER => FALSE,
+                               )
+                    );
+	curl_exec($ch);
+	$url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+	curl_close($ch);
+	return $url;
 }
