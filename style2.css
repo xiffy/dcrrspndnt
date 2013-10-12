@@ -37,12 +37,7 @@ tr.odd {
 th {
 	background: #eee;
 	}
-th.sortable {
-	background: #333;
-	}
-th.sortable a {
-	color: #fff;
-	}
+
 
 h1 {
 	width: auto;
