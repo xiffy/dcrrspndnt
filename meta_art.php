@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <?php
 require_once('settings.local.php');
+require_once('functions.php');
 include('db.php');
 
 $meta_id = (int)$_GET['id'];
@@ -76,19 +77,9 @@ while($row = mysql_fetch_array($art_res))
 
 ?>
 		</table>
-		<ul id="pager">
-	<?php
-	// how many pages?
-	$pages = ceil($tot_row / ITEMS_PER_PAGE);
-	$i = 0;
-	while ($i < $pages)
-	{
-		$page = $i + 1;
-		echo '<li><a href="./meta_art.php?id='.$meta_id.'&amp;page='.$page.'">'.$page.'</a></li>';
-		$i++;
-	}
-	?>
-		</ul>
+<?php
+	pager($tot_row, '');
+?>
 
 		<table class="related">
 			<tr><th>Alle <?php echo $th_related;?></th></tr>
