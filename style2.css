@@ -50,6 +50,10 @@ h1 {
 h1 a {
 	color: #fff;
 	}
+h1 .twitter-follow-button {
+	float: right;
+	margin: 15px;
+	}
 .meta-table {
 	float: left;
 	max-width: 60%;
@@ -178,7 +182,7 @@ ul#pager li a:hover {
 ul#pager li.text {
 	background: transparent;
 	color: #000;
-	margin-right: 33px;
+	width: auto;
 	}
 footer {
 	margin: 0;

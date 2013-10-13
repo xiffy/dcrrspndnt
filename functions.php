@@ -18,6 +18,7 @@ function pager($tot_row)
 			$i++;
 		}
 ?>
+			<li class="text">(tot: <?php echo $tot_row;?>)</li>
 		</ul>
 <?php
 	}
