@@ -26,6 +26,21 @@ if(isset($_GET['page']))
 	$start = ($page - 1) * ITEMS_PER_PAGE;
 	if($start < 0) $start = 0;
 }
+
+$order_by = ' order by created_at desc ';
+$qsa = '';
+$th_pubdate = '<th>Gepubliceerd</th>';
+$sep = strstr($_SERVER['REQUEST_URI'], '?') ? '&amp;' : '?';
+$th_tweets = '<th class="sortable"><a href="'.$_SERVER['REQUEST_URI'].$sep.'order=tweets" title="Sorteer op aantal maal gedeeld" >tweets</a>&#9660;</th>';
+
+if(isset($_GET['order']) && $_GET['order'] == 'tweets')
+{
+	$order_by = ' order by tweet_count desc ';
+	$qsa = '&amp;order=tweets'; // voor de pager
+	$th_pubdate = '<th class="sortable"><a href="./?page='.$page.'" title="Sorteer op publicatiedatum">Gepubliceerd</a>&#9660;</th>';
+	$th_tweets = '<th>tweets</th>';
+}
+
 ?>
 <html>
 	<head>
@@ -45,14 +60,14 @@ if(isset($_GET['page']))
 
 		<table class="meta-table">
 			<tr>
-				<th>Gepubliceerd</th>
+				<?php echo $th_pubdate;?>
 				<th>Title / Artikel</th>
 				<th><?php echo $th_extra; ?></th>
-				<th>tweets</th>
+				<?php echo $th_tweets;?>
 			</tr>
 <?php
 $i = 0;
-$art_res = mysql_query ('select artikelen.*, count(tweets.id) as tweet_count from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id left outer join tweets on tweets.art_id = artikelen.ID where meta_artikel.meta_id = '.$meta_id.' group by artikelen.ID order by created_at desc limit '.$start.','.ITEMS_PER_PAGE);
+$art_res = mysql_query ('select artikelen.*, count(tweets.id) as tweet_count from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id left outer join tweets on tweets.art_id = artikelen.ID where meta_artikel.meta_id = '.$meta_id.' group by artikelen.ID '.$order_by.' limit '.$start.','.ITEMS_PER_PAGE);
 
 while($row = mysql_fetch_array($art_res))
 {
@@ -78,7 +93,7 @@ while($row = mysql_fetch_array($art_res))
 ?>
 		</table>
 <?php
-	pager($tot_row, '');
+	pager($tot_row, $qsa);
 ?>
 
 		<table class="related">

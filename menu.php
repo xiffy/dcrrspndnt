@@ -1,5 +1,8 @@
 <ul id="topmenu">
-	<li><strong><a href="./"> Alle artikelen</a></strong>
+	<li><strong> Artikelen</strong> &#9660;
+		<ul>
+			<li><strong><a href="./"> Alle artikelen</a></strong></li>
+		</ul>
 	</li>
 	<li><strong> Auteurs</strong> &#9660;
 		<ul>

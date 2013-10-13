@@ -26,6 +26,7 @@ if(isset($_GET['page']))
 	$start = ($page - 1) * ITEMS_PER_PAGE;
 	if($start < 0) $start = 0;
 }
+// sorteren kan op 'vinddatum' of aantal tweets
 $order_by = ' order by created_at desc ';
 $qsa = '';
 $th_pubdate = '<th>Gepubliceerd</th>';
@@ -36,7 +37,7 @@ if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 	$order_by = ' order by tweet_count desc ';
 	$qsa = '&amp;order=tweets'; // voor de pager
 	$th_pubdate = '<th class="sortable"><a href="./?page='.$page.'" title="Sorteer op publicatiedatum">Gepubliceerd</a>&#9660;</th>';
-$th_tweets = '<th>tweets</th>';
+	$th_tweets = '<th>tweets</th>';
 }
 
 $i = 0;
