@@ -14,6 +14,7 @@
 
 <?php
 require_once('settings.local.php');
+require_once('functions.php');
 include('db.php');
 $count_res = mysql_query('select count(*) as amount from artikelen');
 $count_arr = mysql_fetch_array($count_res);
@@ -74,20 +75,10 @@ while($row = mysql_fetch_array($res) )
 }
 ?>
 		</table>
-		<ul id="pager">
-			<li class="text">pagina:</li>
-	<?php
-	// how many pages?
-	$pages = ceil($tot_row / ITEMS_PER_PAGE);
-	$i = 0;
-	while ($i < $pages)
-	{
-		$page = $i + 1;
-		echo '			<li><a href="./?page='.$page.$qsa.'">'.$page.'</a></li>';
-		$i++;
-	}
-	?>
-		</ul>
+<?php
+	pager($tot_row, $qsa);
+?>
+
 <?php include('search_box.php') ?>
 	</div>
 <?php include('footer.php') ?>
