@@ -1,6 +1,6 @@
 <?php
 // functions used in more than one file
-function pager($tot_row)
+function pager($tot_row, $qsa)
 {
 	// how many pages?
 	$pages = ceil($tot_row / ITEMS_PER_PAGE);

@@ -69,7 +69,7 @@ while($row = mysql_fetch_array($res) )
 				<td><strong><a href="<?php echo $row['share_url'];?>" title="<?php echo $description ?>"><?php echo $titel ;?></a></strong></td>
 				<td><a href="./meta_art.php?id=<?php echo $author['ID'];?>" title="alle artikelen van deze auteur"><?php echo $author['waarde'];?></a></td>
 				<td><a href="./meta_art.php?id=<?php echo $section['ID'];?>" title="alle artikelen in deze sectie"><?php echo $section['waarde'];?></a></td>
-				<td><?php echo $row['tweet_count']?></td>
+				<td align="right"><?php echo $row['tweet_count']?></td>
 			</tr>
 	<?php
 	$i++;

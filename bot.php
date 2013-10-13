@@ -22,8 +22,14 @@ $oauth = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, OAUTH_KEY, OAUTH_SECRET
 // Make up a useragent
 $oauth->useragent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.9) Gecko/20071025 Firefox/13.6.0.9';
 
-$tweets_found = json_decode($oauth->get('http://api.twitter.com/1.1/search/tweets.json',
-array('q' => $query, 'count' => 100, 'since_id' => $since, 'result_type' => 'recent')));
+$tweets_found = json_decode(
+                  $oauth->get( 'http://api.twitter.com/1.1/search/tweets.json',
+                                array('q' => $query,
+                                      'count' => 100,
+                                      'since_id' => $since,
+                                      'result_type' => 'recent')
+                              )
+                            );
 if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 	//print_r($tweet->entities->urls);
 	update_since($tweet->id);
