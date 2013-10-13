@@ -1,7 +1,8 @@
 <ul id="topmenu">
 	<li><strong> Artikelen</strong> &#9660;
 		<ul>
-			<li><strong><a href="./"> Alle artikelen</a></strong></li>
+			<li><a href="./"> Alle artikelen</a></li>
+			<li><a href="./top.php"> Populiare artikelen</a></li>
 		</ul>
 	</li>
 	<li><strong> Auteurs</strong> &#9660;
