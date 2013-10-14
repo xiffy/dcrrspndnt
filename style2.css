@@ -172,6 +172,11 @@ ul#pager li {
 	text-align: center;
 	font-size: 16px;
 	}
+
+form.disp_selector {
+	display: inline;
+	margin: 2px 5px;
+	}
 ul#pager li a {
 	color: #fff;
 	font-weight: bold;

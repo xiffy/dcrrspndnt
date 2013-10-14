@@ -25,6 +25,8 @@ $th_tweets = '<th>tweets</th>';
 $order_by = ' order by tweet_count desc ';
 
 $mode = '';
+$title = 'Populaire artikelen op \'de Correspondent\' volgens twitter (all time)';
+
 if(isset($_GET['mode']))
 {
 	$mode = $_GET['mode'];
@@ -32,12 +34,32 @@ if(isset($_GET['mode']))
 	{
 		case 'hour':
 			$mode = ' where tweets.created_at > date_add(now(), interval -60 minute) ';
+			$title = 'Populaire artikelen op \'de Correspondent\' volgens twitter (laatste uur)';
+			if (isset($_GET['disposition']))
+			{
+				$disp = (int) $_GET['disposition'];
+				$low = ($disp + 1) * 60;
+				$high = $disp * 60;
+				$mode = 'where tweets.created_at > date_add(now(), interval -'.$low.' minute) and tweets.created_at < date_add(now(), interval -'.$high.' minute) ';
+				$title = 'Populaire artikelen op \'de Correspondent\' volgens twitter ('.$disp.' uur geleden)';
+			}
 			break;
 		case 'day':
 			$mode = ' where tweets.created_at > date_add(now(), interval -24 hour) ';
+			$title = 'Populaire artikelen op \'de Correspondent\' volgens twitter (afgelopen 24 uur)';
+			if (isset($_GET['disposition']))
+			{
+				$disp = (int) $_GET['disposition'];
+				$low = ($disp + 1) * 24;
+				$high = $disp * 24;
+				$mode = 'where tweets.created_at > date_add(now(), interval -'.$low.' hour) and tweets.created_at < date_add(now(), interval -'.$high.' hour) ';
+				$title = 'Populaire artikelen op \'de Correspondent\' volgens twitter ('.$disp.' dag geleden)';
+			}
+
 			break;
 		case 'week':
 			$mode = ' where tweets.created_at > date_add(now(), interval -7 day) ';
+			$title = 'Populaire artikelen op \'de Correspondent\' volgens twitter (afgelopen week time)';
 			break;
 		default:
 			$mode = '';
@@ -47,7 +69,7 @@ if(isset($_GET['mode']))
 $i = 0;
 $res = mysql_query('select artikelen.*, count(tweets.id) as tweet_count from artikelen left outer join tweets on tweets.art_id = artikelen.id '.$mode.' group by artikelen.id having tweet_count > 0 '.$order_by.' limit '.$start.',50');
 ?>
-		<h1>Populaire artikelen van <a href="http://decorrespondent.nl/">de Correspondent</a> gevonden op Twitter <a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a><a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a></h1>
+		<h1><?php echo $title;?> <a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a><a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a></h1>
 <?php include ('menu.php'); ?>
 		<div class="center">
 		<table>
@@ -55,6 +77,7 @@ $res = mysql_query('select artikelen.*, count(tweets.id) as tweet_count from art
 				<?php echo $th_pubdate;?><th>Titel / Artikel</th><th>Auteur</th><th>Sectie</th><?php echo $th_tweets;?>
 			</tr>
 <?php
+$tot_tweets = 0;
 while($row = mysql_fetch_array($res) )
 {
 	$og = unserialize(stripslashes($row['og']));
@@ -73,12 +96,59 @@ while($row = mysql_fetch_array($res) )
 				<td><strong><a href="<?php echo $row['share_url'];?>" title="<?php echo $description ?>"><?php echo $titel ;?></a></strong></td>
 				<td><a href="./meta_art.php?id=<?php echo $author['ID'];?>" title="alle artikelen van deze auteur"><?php echo $author['waarde'];?></a></td>
 				<td><a href="./meta_art.php?id=<?php echo $section['ID'];?>" title="alle artikelen in deze sectie"><?php echo $section['waarde'];?></a></td>
-				<td><?php echo $row['tweet_count']?></td>
+				<td align="right"><?php echo $row['tweet_count']; $tot_tweets += (int)$row['tweet_count'];?></td>
 			</tr>
 	<?php
 	$i++;
 }
 ?>
+			<tr><td colspan="4" align="right">totaal tweets:</td><td align="right"><strong><?php echo $tot_tweets;?></strong></tr>
+			<tr>
+				<td></td>
+				<td colspan="3">per uur:
+					<script>
+						function goto_sel(selector) {
+							var sel = document.getElementById(selector).selectedIndex;
+							var uris = document.getElementById(selector).options;
+							var goto = uris[sel].value;
+							window.location=('top.php'+goto);
+							return;
+						}
+					</script>
+					<form class="disp_selector" method="GET" action="javascript:goto_sel('hour');" onsumbit="return goto_sel('hour')">
+					<select id="hour">
+						<option value="?mode=hour">afgelopen uur</option>
+						<?php
+						for ($i=1;$i<24;$i++)
+						{
+							$selected = ( $disp == $i ) ? ' selected="true" ' : '';
+						?>
+							<option value="?mode=hour&disposition=<?php echo $i;?>" <?php echo $selected;?>><?php echo $i;?> uur geleden</option>
+						<?php
+						}
+						?>
+					</select>
+					<input type="submit" value="Toon"/>
+					</form>
+					per dag:
+					<form class="disp_selector" method="GET" action="javascript:goto_sel('day');" onsumbit="return goto_sel('day')">
+					<select id="day">
+						<option value="?mode=day">afgelopen dag</option>
+						<?php
+						for ($i=1;$i<6;$i++)
+						{
+							$selected = ( $disp == $i ) ? ' selected="true" ' : '';
+						?>
+							<option value="?mode=day&disposition=<?php echo $i;?>" <?php echo $selected;?>><?php echo $i;?> dag geleden</option>
+						<?php
+						}
+						?>
+					</select>
+					<input type="submit" value="Toon"/>
+					</form>
+				</td>
+				<td></td>
+			</tr>
 		</table>
 
 
