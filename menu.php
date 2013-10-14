@@ -3,6 +3,9 @@
 		<ul>
 			<li><a href="./"> Alle artikelen</a></li>
 			<li><a href="./top.php"> Populiare artikelen</a></li>
+			<li><a href="./top.php?mode=week"> Populiare artikelen (deze week)</a></li>
+			<li><a href="./top.php?mode=day"> Populiare artikelen (vandaag)</a></li>
+			<li><a href="./top.php?mode=hour"> Populiare artikelen (dit uur)</a></li>
 		</ul>
 	</li>
 	<li><strong> Auteurs</strong> &#9660;

@@ -18,16 +18,34 @@ require_once('functions.php');
 include('db.php');
 
 $start = 0;
-
-
 $qsa = '';
 $th_pubdate = '<th>Gepubliceerd</th>';
 $sep = strstr($_SERVER['REQUEST_URI'], '?') ? '&amp;' : '?';
 $th_tweets = '<th>tweets</th>';
 $order_by = ' order by tweet_count desc ';
 
+$mode = '';
+if(isset($_GET['mode']))
+{
+	$mode = $_GET['mode'];
+	switch($mode)
+	{
+		case 'hour':
+			$mode = ' where tweets.created_at > date_add(now(), interval -60 minute) ';
+			break;
+		case 'day':
+			$mode = ' where tweets.created_at > date_add(now(), interval -24 hour) ';
+			break;
+		case 'week':
+			$mode = ' where tweets.created_at > date_add(now(), interval -7 day) ';
+			break;
+		default:
+			$mode = '';
+	}
+}
+
 $i = 0;
-$res = mysql_query('select artikelen.*, count(tweets.id) as tweet_count from artikelen left outer join tweets on tweets.art_id = artikelen.id group by artikelen.id having tweet_count > 0 '.$order_by.' limit '.$start.',50');
+$res = mysql_query('select artikelen.*, count(tweets.id) as tweet_count from artikelen left outer join tweets on tweets.art_id = artikelen.id '.$mode.' group by artikelen.id having tweet_count > 0 '.$order_by.' limit '.$start.',50');
 ?>
 		<h1>Populaire artikelen van <a href="http://decorrespondent.nl/">de Correspondent</a> gevonden op Twitter <a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a><a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a></h1>
 <?php include ('menu.php'); ?>
