@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS `tweets` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `art_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `tweet_id` varchar(255) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`),
   KEY `art_id` (`art_id`),
   KEY `tweet_id` (`tweet_id`)
