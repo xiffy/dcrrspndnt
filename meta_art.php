@@ -82,7 +82,7 @@ while($row = mysql_fetch_array($art_res))
 	?>
 	<tr <?php if($i % 2 == 1) echo 'class="odd"'?>>
 		<td><abbr title="gevonden op: <?php echo $found_at;?>"><?php echo $display_time ?></abbr></td>
-		<td><a href="<?php echo $row['share_url'];?>" title="<?php echo $description ?>"><?php echo $titel ;?></a></td>
+		<td style="max-width:400px"><a href="<?php echo $row['share_url'];?>" title="<?php echo $description ?>"><?php echo $titel ;?></a></td>
 		<td><a href="./meta_art.php?id=<?php echo $extra_arr['ID'];?>"><?php echo $extra_arr['waarde'] ?></a></td>
 		<td align="right"><?php echo $row['tweet_count'];?></td>
 	</tr>
