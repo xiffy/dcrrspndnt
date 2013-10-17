@@ -9,7 +9,9 @@ echo ' version="1.0"?>'; ?>
 require_once('settings.local.php');
 include('db.php');
 $extra_title = '';
-$query = 'select * from artikelen order by created_at desc limit 0,50';
+$query = 'select artikelen.*,meta.waarde as pubdate from artikelen
+left join meta_artikel on meta_artikel.art_id = artikelen.id
+left join meta on meta.id = meta_artikel.meta_id where meta.`type` = "article:published_time" order by created_at desc limit 0,50';
 if (isset($_GET['id']))
 {
 	$meta_id = (int) $_GET['id'];
@@ -46,7 +48,7 @@ while($row = mysql_fetch_array($res) )
 			<link><?php echo $row['share_url']?></link>
 			<description><?php echo $description ?></description>
 			<guid><?php echo $row['clean_url'];?></guid>
-			<pubDate><?php $row['created_at'];?></pubDate>
+			<pubDate><?php echo date(r,$row['pubdate']);?></pubDate>
 		</item>
 <?php } ?>
 	</channel>
