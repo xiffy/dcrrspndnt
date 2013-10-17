@@ -44,7 +44,8 @@ while($row = mysql_fetch_array($res) )
 	$description = isset($og['description']) ? $og['description'] : 'Een mysterieus artikel';
 	$auth_res = mysql_query('select * from meta where meta.waarde = "'.$og['article:author'].'"');
 	$author = mysql_fetch_array($auth_res);
-
+	$section_res = mysql_query('select * from meta where meta.waarde = "'.$og['article:section'].'"');
+	$section = mysql_fetch_array($section_res);
 ?>
 		<item>
 			<title><?php echo $titel;?></title>
@@ -52,6 +53,7 @@ while($row = mysql_fetch_array($res) )
 			<description><?php echo $description ?></description>
 			<author><?php echo $author['waarde'];?></author>
 			<guid><?php echo $row['clean_url'];?></guid>
+			<category><?php echo section['waarde'];?></category>
 			<pubDate><?php echo date(r,$row['pubdate']);?></pubDate>
 		</item>
 <?php } ?>
