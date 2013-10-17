@@ -42,11 +42,15 @@ while($row = mysql_fetch_array($res) )
 	$og = unserialize(stripslashes($row['og']));
 	$titel = isset($og['title']) ? $og['title'] : substr($row['clean_url'],26);
 	$description = isset($og['description']) ? $og['description'] : 'Een mysterieus artikel';
+	$auth_res = mysql_query('select * from meta where meta.waarde = "'.$og['article:author'].'"');
+	$author = mysql_fetch_array($auth_res);
+
 ?>
 		<item>
 			<title><?php echo $titel;?></title>
 			<link><?php echo $row['share_url']?></link>
 			<description><?php echo $description ?></description>
+			<author><?php echo $author['waarde'];?></author>
 			<guid><?php echo $row['clean_url'];?></guid>
 			<pubDate><?php echo date(r,$row['pubdate']);?></pubDate>
 		</item>
