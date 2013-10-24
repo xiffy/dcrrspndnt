@@ -8,6 +8,10 @@
 		<title>de correspondent, de artikelen - populai op twitter</title>
 		<link rel="stylesheet" href="./style2.css" />
 		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
+		<?php
+		@include('./tinypass.js')
+		?>
+
 	</head>
 	<body>
 
@@ -25,7 +29,7 @@ $th_tweets = '<th>tweets</th>';
 $order_by = ' order by tweet_count desc ';
 
 $mode = '';
-$title = 'Populaire artikelen op \'de Correspondent\' volgens twitter (all time)';
+$title = 'Populaire artikelen volgens twitter (all time)';
 
 if(isset($_GET['mode']))
 {
@@ -34,14 +38,14 @@ if(isset($_GET['mode']))
 	{
 		case 'hour':
 			$mode = ' where tweets.created_at > date_add(now(), interval -60 minute) ';
-			$title = 'Populaire artikelen op \'de Correspondent\' volgens twitter (laatste uur)';
+			$title = 'Populaire artikelen volgens twitter (laatste uur)';
 			if (isset($_GET['disposition']))
 			{
 				$disp = (int) $_GET['disposition'];
 				$low = ($disp + 1) * 60;
 				$high = $disp * 60;
 				$mode = 'where tweets.created_at > date_add(now(), interval -'.$low.' minute) and tweets.created_at < date_add(now(), interval -'.$high.' minute) ';
-				$title = 'Populaire artikelen op \'de Correspondent\' volgens twitter ('.$disp.' uur geleden)';
+				$title = 'Populaire artikelen volgens twitter ('.$disp.' uur geleden)';
 			}
 			break;
 		case 'day':
@@ -53,13 +57,13 @@ if(isset($_GET['mode']))
 				$low = ($disp + 1) * 24;
 				$high = $disp * 24;
 				$mode = 'where tweets.created_at > date_add(now(), interval -'.$low.' hour) and tweets.created_at < date_add(now(), interval -'.$high.' hour) ';
-				$title = 'Populaire artikelen op \'de Correspondent\' volgens twitter ('.$disp.' dag geleden)';
+				$title = 'Populaire artikelen volgens twitter ('.$disp.' dag geleden)';
 			}
 
 			break;
 		case 'week':
 			$mode = ' where tweets.created_at > date_add(now(), interval -7 day) ';
-			$title = 'Populaire artikelen op \'de Correspondent\' volgens twitter (afgelopen week time)';
+			$title = 'Populaire artikelen volgens twitter ('.$disp.' week)';
 			break;
 		default:
 			$mode = '';

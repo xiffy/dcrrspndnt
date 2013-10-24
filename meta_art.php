@@ -52,6 +52,10 @@ if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 		<title>de Correspondent, artikelen <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde'].' ('.$mode.')';?></title>
 		<link rel="stylesheet" href="./style2.css" />
 		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
+		<?php
+		@include('./tinypass.js')
+		?>
+
 	</head>
 	<body id="meta_art">
 		<h1>Artikelen geschreven <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde']?> <a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a><a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a></h1>
