@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `app_keys` (
   `app_value` mediumtext NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `app_key` (`app_key`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Data exporteren was gedeselecteerd
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `artikelen` (
   UNIQUE KEY `clean_url` (`clean_url`),
   UNIQUE KEY `t_co` (`t_co`),
   KEY `created_at` (`created_at`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Data exporteren was gedeselecteerd
 
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `meta` (
   PRIMARY KEY (`ID`),
   KEY `waarde` (`waarde`),
   KEY `type` (`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Data exporteren was gedeselecteerd
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `meta_artikel` (
   PRIMARY KEY (`ID`),
   KEY `artikel` (`art_id`),
   KEY `meta` (`meta_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Data exporteren was gedeselecteerd
 
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `tweets` (
   PRIMARY KEY (`ID`),
   KEY `art_id` (`art_id`),
   KEY `tweet_id` (`tweet_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Om accuraat te kunnen tellen';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Om accuraat te kunnen tellen';
 
 -- Data exporteren was gedeselecteerd
 
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `unshorten` (
   `url` varchar(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `short_url` (`short_url`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='om geresolvde uri''s eenmalig op te vragen';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='om geresolvde uri''s eenmalig op te vragen';
 
 -- Data exporteren was gedeselecteerd
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
