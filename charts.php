@@ -47,7 +47,11 @@ foreach($tweets as $tweet_data)
 }
 $bar_tweet_data = substr($bar_tweet_data, 0, strlen($bar_tweet_data) - 1);
 
-$graph_res = mysql_query("select count(tweets.id) as tweet_count, hour(tweets.created_at) as per_uur from tweets group by per_uur");
+$dagen_res = mysql_query("select day(tweets.created_at) as dagen from tweets");
+$arr = mysql_fetch_array($dagen_res);
+$dagen = $arr['dagen'];
+
+$graph_res = mysql_query("select count(tweets.id) as tweet_count, hour(tweets.created_at) as per_uur from tweets where created_at > '2013-10-13 20:59' group by per_uur ");
 
 $high = 0;
 $hour_label = '';
@@ -55,8 +59,9 @@ $hour_tweet_data = '';
 while ($row = mysql_fetch_array($graph_res))
 {
 	$hour_label .= $row['per_uur'].',';
-	$hour_tweet_data .= $row['tweet_count'].',';
-	$high = max($high, $row['tweet_count'] + 30);
+	$tot = ceil($row['tweet_count'] / $dagen);
+	$hour_tweet_data .= $tot.',';
+	$high = max($high, $tot + 30);
 }
 $scaleWidth2 = ceil($high / 10);
 $hour_label = substr($hour_label, 0, strlen($hour_label) - 1);
