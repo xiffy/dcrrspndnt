@@ -55,7 +55,7 @@ if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 		<?php
 		@include('./tinypass.js')
 		?>
-
+		<script src="Chart.min.js"></script>
 	</head>
 	<body id="meta_art">
 		<h1>Artikelen geschreven <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde']?> <a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a><a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a></h1>
@@ -116,9 +116,50 @@ while($row = mysql_fetch_array($art_res))
 			}
 ?>
 		</table>
-<div class="center">
+		<div class="center">
 <?php include('search_box.php'); ?>
-</div>
+<?php
+// grafiekje tweets per dag over deze meta (auteur of sectie)
+$graph_res = mysql_query("select count(tweets.id) as tweet_count, day(tweets.created_at) as dag, month(tweets.created_at) as maand from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id left outer join tweets on tweets.art_id = artikelen.ID where meta_artikel.meta_id = {$meta_id} and not day(tweets.created_at) is null group by maand, dag");
+
+$high = 0;
+$bar_label = '';
+$bar_tweet_data = '';
+while ($row = mysql_fetch_array($graph_res))
+{
+	$bar_label .= $row['dag'].',';
+	$bar_tweet_data .= $row['tweet_count'].',';
+	$high = max($high, $row['tweet_count'] + 100);
+}
+$scaleWidth = ceil($high / 10);
+$bar_label = substr($bar_label, 0, strlen($bar_label) - 1);
+$bar_tweet_data = substr($bar_tweet_data, 0, strlen($bar_tweet_data) - 1);
+?>
+			<div class="meta_graph">
+			<h2 id="grafiek">tweets per dag; artikelen <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde'] ?></h2>
+			<canvas id="tot_tweets" height="450" width="800"></canvas>
+			<script>
+				var barOptions = {
+					scaleOverride : 1,
+					scaleSteps : 10,
+					//Number - The value jump in the hard coded scale
+					scaleStepWidth : <?php echo $scaleWidth; ?>,
+					//Number - The scale starting value
+					scaleStartValue : 0
+
+				}
+				var barChartData = {
+					labels: [ <?php echo $bar_label;  ?>],
+					datasets : [ {
+												fillColor   : "rgba(77,83,97,0.5)",
+												strokeColor : "rgba(77,83,97,1)",
+												data : [<?php echo $bar_tweet_data;?>]
+										 } ]
+				}
+				var tweetTot = new Chart(document.getElementById("tot_tweets").getContext("2d")).Bar(barChartData, barOptions);
+			</script>
+		</div>
+		</div>
 <?php include('footer.php') ?>
 	</body>
 <?php @include('ga.inc.php'); ?>

@@ -51,7 +51,7 @@ $bar_tweet_data = substr($bar_tweet_data, 0, strlen($bar_tweet_data) - 1);
 		<h1><a href="http://decorrespondent.nl/">de Correspondent</a> tweets in grafieken <a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a><a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a></h1>
 <?php include ('menu.php'); ?>
 		<div class="center">
-			<canvas id="tot_tweets" height="450" width="600"></canvas>
+			<canvas id="tot_tweets" height="450" width="800"></canvas>
 			<script>
 				var barOptions = {
 					scaleOverride : 1,

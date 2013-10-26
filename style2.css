@@ -161,6 +161,10 @@ ul#pager {
 	float: left;
 	max-width: 60%;
 	}
+.meta_graph {
+	width: 800px;
+	margin: 10px auto 10px 40px;
+}
 ul#pager li {
 	margin: 0 5px;
 	padding: 0;
