@@ -21,7 +21,7 @@
 require_once('settings.local.php');
 require_once('functions.php');
 include('db.php');
-$tot_tweets_res = mysql_query('select count(tweets.id) as tweet_count, day(tweets.created_at) as  dag, month(tweets.created_at) as maand from tweets group by maand, dag');
+$tot_tweets_res = mysql_query('select count(tweets.id) as tweet_count, day(tweets.created_at) as  dag, month(tweets.created_at) as maand from tweets where created_at > "2013-10-13 21:00" group by maand, dag');
 
 $label = array();
 $tweets = array();
