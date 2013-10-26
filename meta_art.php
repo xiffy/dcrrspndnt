@@ -129,7 +129,7 @@ while ($row = mysql_fetch_array($graph_res))
 {
 	$bar_label .= $row['dag'].',';
 	$bar_tweet_data .= $row['tweet_count'].',';
-	$high = max($high, $row['tweet_count'] + 100);
+	$high = max($high, $row['tweet_count'] + 30);
 }
 $scaleWidth = ceil($high / 10);
 $bar_label = substr($bar_label, 0, strlen($bar_label) - 1);
