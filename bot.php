@@ -1,5 +1,5 @@
 <?php
-$query = 'decorrespondent.nl/';
+$query = 'nrc.nl/';
 
 // passwords, keys, db-settings
 require_once('settings.local.php');
