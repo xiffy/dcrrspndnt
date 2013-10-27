@@ -153,8 +153,8 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 					// share url ook van m.nrc.nl ontdoen...
 					if( strstr($share,'m.nrc.nl') )
 						$share = str_replace('m.nrc.nl', 'www.nrc.nl', $share);
-
-					echo 'inserting: insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.substr($og,0,20).'")'."\n";
+					echo 'Found article: '.$clean."\n";
+//					echo 'inserting: insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.substr($og,0,20).'")'."\n";
 					mysql_query('insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.addslashes($og).'")');
 
 					if (COUNT_TWEETS == 1)
