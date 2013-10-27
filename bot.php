@@ -108,7 +108,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 						foreach( $html->find('div[class=author]') as $author)
 						{ // this works for nrc.nl !! :-)
 							$og['article:author'] = $author->first_child()->first_child()->innertext;
-							echo 'Found author: '.$og['article:author'];
+							echo 'Found author: '.$og['article:author']."\n";
 						}
 					}
 					if (SEND_TWEETS == 1)
