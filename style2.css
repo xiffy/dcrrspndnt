@@ -42,8 +42,8 @@ th {
 h1 {
 	width: auto;
 	color: #ccc;
-	background-color: #232323;
-	box-shadow: 0 -20px 50px #555 inset;
+	background-color: #D30910;
+	box-shadow: 0 -20px 50px #7A0509 inset;
 	padding: 5px 10px 30px 10px;
 	margin: 0 0 10px 0;
 	}
@@ -112,21 +112,21 @@ ul#topmenu ul {
 	display: none;
 	}
 ul#topmenu ul li {
-	background: rgb(35, 35, 35);
+	background: #D30910;
 	padding: 0 10px;
 	width: 300px;
 	height: 25px;
 	margin: 0 -10px;
 	}
 ul#topmenu ul li:last-child {
-	border-bottom:5px solid rgb(35, 35, 35);
+	border-bottom:5px solid #D30910;
 	}
 ul#topmenu ul li:first-child {
-	border-top:5px solid rgb(35, 35, 35);
+	border-top:5px solid #D30910;
 	}
 ul#topmenu li:hover > ul {
 	display: block;
-	background: #DF5B57;
+	background: #fff;
 	}
 ul#topmenu li ul li div {
 	width: 100%;
@@ -134,7 +134,7 @@ ul#topmenu li ul li div {
 	}
 ul#topmenu li ul li a:hover > div {
 	color: #000;
-	background: #9ECECA;
+	background: #fff;
 	}
 .search_box {
 	width: 300px;
@@ -198,7 +198,7 @@ ul#pager li.text {
 	}
 footer {
 	margin: 0;
-	background: #555;
+	background: #7A0509;
 	color: #ddd;
 	min-height: 200px;
 	padding-top: 20px;
