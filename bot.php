@@ -148,13 +148,20 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 							}
 						}
 						if (empty($og['article:section']))
-						{ // voorlopig even de auteur dumpen
+						{ // blog-slug dan als categorie gebruiken, als die er ook niet is, dan is er altijd nog een auteur
 							if( $parsed['host'] == 'archief.nrc.nl' )
 								$og['article:section'] = 'archief';
 							elseif( $parsed['host'] == 'vorige.nrc.nl' )
 								$og['article:section'] = 'vorige';
 							else
-								$og['article:section'] = $og['article:author'];
+							{
+								foreach($html->find('article[id=artikel]') as $artinfo)
+								{
+									$og['article:section'] = $artinfo->{"data-blog-slug"};
+								}
+								if (empty($og['article:section']))
+									$og['article:section'] = $og['article:author'];
+							}
 						}
 						// herstel &amp;amp;
 						foreach($og as $key => $value)
