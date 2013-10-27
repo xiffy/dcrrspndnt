@@ -23,12 +23,12 @@ $display_string = htmlspecialchars($_GET['q']);
 		<div class="center">
 		<table>
 			<tr>
-				<th>Gepubliceerd</th><th>Titel / Artikel</th><th>Auteur</th><th>Sectie</th>
+				<th>Gepubliceerd</th><th>Titel / Artikel</th><th>Auteur</th><th>Sectie</th><th>Tweets</th>
 			</tr>
 <?php
 // teller-query toevoegen, pager voeden!
 
-$res = mysql_query('select * from meta left join meta_artikel on meta_artikel.meta_id = meta.id left join artikelen on artikelen.id = meta_artikel.art_id where waarde like "%'.$search_string.'%" and NOT artikelen.id IS NULL group by artikelen.id ');
+$res = mysql_query('select *, count(tweets.id) as tweet_count from meta left join meta_artikel on meta_artikel.meta_id = meta.id left join artikelen on artikelen.id = meta_artikel.art_id left outer join tweets on tweets.art_id = artikelen.id where waarde like "%'.$search_string.'%" and NOT artikelen.id IS NULL group by artikelen.id ');
 $i = 0;
 while($row = mysql_fetch_array($res) )
 {
@@ -49,6 +49,7 @@ while($row = mysql_fetch_array($res) )
 				<td><strong><a href="<?php echo $row['share_url'];?>" title="<?php echo $description ?>"><?php echo $titel ;?></a></strong></td>
 				<td><a href="./meta_art.php?id=<?php echo $author['ID'];?>" title="alle artikelen van deze auteur"><?php echo $author['waarde'];?></a></td>
 				<td><a href="./meta_art.php?id=<?php echo $section['ID'];?>" title="alle artikelen in deze sectie"><?php echo $section['waarde'];?></a></td>
+				<td align="right"><?php echo $row['tweet_count'];?></td>
 			</tr>
 	<?php
 	$i++;
