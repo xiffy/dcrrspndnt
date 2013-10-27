@@ -35,18 +35,4 @@ while($row = mysql_fetch_array($r))
 ?>
 		</ul>
 	</li>
-	<li class="small">
-		<?php
-		if(isset($meta_id))
-		{ ?>
-		<a href="./rss.php?id=<?php echo $meta_id;?>" title="RSS Feed"><strong>RSS </strong><img src="img/ikoon.rss.png" /></a>
-		<?php
-		}
-		else
-		{ ?>
-		<a href="./rss.php" title="RSS Feed"><strong>RSS </strong><img src="img/ikoon.rss.png" /></a>
-		<?php
-		}
-		?>
-	</li>
 </ul>

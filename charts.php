@@ -63,7 +63,7 @@ $hour_tweet_data = substr($hour_tweet_data, 0, strlen($hour_tweet_data) - 1);
 
 ?>
 
-		<h1><a href="http://decorrespondent.nl/">de Correspondent</a> tweets in grafieken <a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a><a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a></h1>
+		<h1>nrc.nl tweets in grafieken </h1>
 <?php include ('menu.php'); ?>
 		<div class="center">
 		<div class="meta_graph">
@@ -116,6 +116,4 @@ $hour_tweet_data = substr($hour_tweet_data, 0, strlen($hour_tweet_data) - 1);
 		</div>
 <?php include('footer.php') ?>
 	</body>
-<?php @include('ga.inc.php') ?>
-
 </html>

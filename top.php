@@ -2,16 +2,9 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="keywords" content="de correspondent, gedeelde artikelen, twitter, overzicht, gratis">
-		<meta name="description" content="dcrrspndnt, indexer van gedeelde artikelen van De Correspondent, http://decorrespondent.nl", lees alle gedeelde artikelen op twitter gratis via http://molecule.nl/decorrespondent/>
 		<meta name="author" content="xiffy">
-		<title>de correspondent, de artikelen - populai op twitter</title>
+		<title>nrc.nl, de artikelen - populair op twitter</title>
 		<link rel="stylesheet" href="./style2.css" />
-		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
-		<?php
-		@include('./tinypass.js')
-		?>
-
 	</head>
 	<body>
 
@@ -50,7 +43,7 @@ if(isset($_GET['mode']))
 			break;
 		case 'day':
 			$mode = ' where tweets.created_at > date_add(now(), interval -24 hour) ';
-			$title = 'Populaire artikelen op \'de Correspondent\' volgens twitter (afgelopen 24 uur)';
+			$title = 'Populaire artikelen op \'nrc.nl\' volgens twitter (afgelopen 24 uur)';
 			if (isset($_GET['disposition']))
 			{
 				$disp = (int) $_GET['disposition'];
@@ -159,7 +152,5 @@ while($row = mysql_fetch_array($res) )
 <?php include('search_box.php') ?>
 	</div>
 <?php include('footer.php') ?>
-</body>
-<?php @include('ga.inc.php') ?>
-
+	</body>
 </html>

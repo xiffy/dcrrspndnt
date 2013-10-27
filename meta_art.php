@@ -45,20 +45,14 @@ if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="keywords" content="de correspondent, gedeelde artikelen, twitter, overzicht, gratis">
-		<meta name="description" content="dcrrspndnt, indexer van gedeelde artikelen van De Correspondent, http://decorrespondent.nl", lees alle gedeelde artikelen op twitter gratis via http://molecule.nl/decorrespondent/>
 		<meta name="author" content="xiffy">
 
-		<title>de Correspondent, artikelen <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde'].' ('.$mode.')';?></title>
+		<title>nrc.nl, artikelen <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde'].' ('.$mode.')';?></title>
 		<link rel="stylesheet" href="./style2.css" />
-		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
-		<?php
-		@include('./tinypass.js')
-		?>
 		<script src="Chart.min.js"></script>
 	</head>
 	<body id="meta_art">
-		<h1>Artikelen geschreven <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde']?> <a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a><a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a></h1>
+		<h1>Artikelen geschreven <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde']?></h1>
 <?php include('menu.php')?>
 		<div class="clear"></div>
 
@@ -162,5 +156,4 @@ $bar_tweet_data = substr($bar_tweet_data, 0, strlen($bar_tweet_data) - 1);
 		</div>
 <?php include('footer.php') ?>
 	</body>
-<?php @include('ga.inc.php'); ?>
 </html>
