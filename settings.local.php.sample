@@ -4,15 +4,16 @@
 
 // database info
 define ('DB_HOST', 'localhost');
-define ('DB_USER', 'USERNAME');
-define ('DB_PASSWD', 'PASSWORD');
-define ('DB_NAME', 'DB_NAME');
+define ('DB_USER', 'nrctweetsdba');
+define ('DB_PASSWD', '^nrc$DB4');
+define ('DB_NAME', 'nrctweets');
 
 // twitter keys
-define ('CONSUMER_KEY', 'consumer_key');
-define ('CONSUMER_SECRET', 'consumer_secret');
-define ('OAUTH_KEY', 'oauth_key');
-define ('OAUTH_SECRET', 'oauth_secret');
+define ('CONSUMER_KEY', 'ow0H4wFyIK7CYkpo1sXPg');
+define ('CONSUMER_SECRET', 'B7osDJT6exjoSMmNxqPItUvhqKKdKCUTQb1f7J8o');
+define ('OAUTH_KEY', '460257975-3cLcthoanJ5N1lzAj5ojKnyqk1MN6nma2urEblbb');
+define ('OAUTH_SECRET', 'iKMSNdKBxOrmBcdf8wbY1vnYTyhsKbCREuNgWrtnoE');
+
 
 // outgoing twitterkeys
 // this can be the same account as above, be aware that you need to modify your application
