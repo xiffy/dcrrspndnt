@@ -5,7 +5,6 @@
 		<meta name="author" content="xiffy">
 		<title>nrc.nl, de artikelen volgens twitter</title>
 		<link rel="stylesheet" href="./style2.css" />
-		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
 	</head>
 	<body>
 
