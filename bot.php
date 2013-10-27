@@ -45,9 +45,9 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 			$short_res = mysql_query('select * from unshorten where short_url = "'.addslashes($short).'"');
 			if(mysql_num_rows($short_res) == 0)
 			{
-				echo $short."\n";
+				echo substr($short, 0, 30);
 				$share = unshorten_url($short);
-				echo 'became-> '.$share."\n\n";
+				echo ' => '.substr($share, 0, 45)."\n";
 				// opslaan opdat we deze niet nogmaals opvragen
 				mysql_query('insert into unshorten (short_url, url) values ("'.addslashes($short).'","'.addslashes($share).'")');
 			}
@@ -141,6 +141,11 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 						if (empty($og['article:section']))
 						{ // voorlopig even de auteur dumpen
 							$og['article:section'] = $og['article:author'];
+						}
+						// herstel &amp;amp;
+						foreach($og as $key => $value)
+						{
+							$og[$key] = str_replace('&amp;amp;', '&amp;', $value);
 						}
 					}
 					// nu mogen we serializen
