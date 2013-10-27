@@ -5,7 +5,7 @@
 		<meta name="author" content="xiffy">
 		<title>nrc.nl, de tweets in grafieken</title>
 		<link rel="stylesheet" href="./style2.css" />
-		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
+		<link rel="alternate" type="application/rss+xml" title="Artikelen van nrc.nl" href="./rss.php">
 
 		<script src="Chart.min.js"></script>
 	</head>
@@ -42,11 +42,10 @@ foreach($tweets as $tweet_data)
 }
 $bar_tweet_data = substr($bar_tweet_data, 0, strlen($bar_tweet_data) - 1);
 
-$dagen_res = mysql_query("select day(tweets.created_at) as dagen from tweets");
-$arr = mysql_fetch_array($dagen_res);
-$dagen = $arr['dagen'];
+$dagen_res = mysql_query("select day(tweets.created_at) as dagen from tweets group by dagen");
+$dagen = mysql_num_rows($dagen_res);
 
-$graph_res = mysql_query("select count(tweets.id) as tweet_count, hour(tweets.created_at) as per_uur from tweets where created_at > '2013-10-13 20:59' group by per_uur ");
+$graph_res = mysql_query("select count(tweets.id) as tweet_count, hour(tweets.created_at) as per_uur from tweets  group by per_uur ");
 
 $high = 0;
 $hour_label = '';
