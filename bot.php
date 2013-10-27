@@ -106,8 +106,11 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 							}
 						}
 					}
-					$tweet_text = $og['article:author'] .': '.$og['title'];
-					$tweet_text = str_replace('&#039;', "'", $tweet_text);
+					if (SEND_TWEETS == 1) 
+					{
+						$tweet_text = $og['article:author'] .': '.$og['title'];
+						$tweet_text = str_replace('&#039;', "'", $tweet_text);
+					}
 					// nu mogen we serializen
 					$og = serialize($og);
 
