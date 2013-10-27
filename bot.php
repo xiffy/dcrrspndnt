@@ -105,8 +105,13 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 								$og[$key] = stripslashes($meta->content);
 							}
 						}
+						foreach( $html->find('div[class=author]') as $author)
+						{ // this works for nrc.nl !! :-)
+							$og['article:author'] = $author->first_child()->first_child()->innertext;
+							echo 'Found author: '.$og['article:author'];
+						}
 					}
-					if (SEND_TWEETS == 1) 
+					if (SEND_TWEETS == 1)
 					{
 						$tweet_text = $og['article:author'] .': '.$og['title'];
 						$tweet_text = str_replace('&#039;', "'", $tweet_text);
