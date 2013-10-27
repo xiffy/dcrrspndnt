@@ -23,6 +23,7 @@ include('db.php');
 
 $start = 0;
 $qsa = '';
+$disp = '';
 $th_pubdate = '<th>Gepubliceerd</th>';
 $sep = strstr($_SERVER['REQUEST_URI'], '?') ? '&amp;' : '?';
 $th_tweets = '<th>tweets</th>';
