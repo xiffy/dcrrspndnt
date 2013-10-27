@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="keywords" content="de correspondent, gedeelde artikelen, twitter, overzicht, gratis">
-		<meta name="description" content="dcrrspndnt, indexer van gedeelde artikelen van De Correspondent, http://decorrespondent.nl", lees alle gedeelde artikelen op twitter gratis via http://molecule.nl/decorrespondent/>
+		<meta name="description" content="dcrrspndnt, indexer van gedeelde artikelen van De Correspondent, http://decorrespondent.nl, lees alle gedeelde artikelen op twitter gratis via http://molecule.nl/decorrespondent/">
 		<meta name="author" content="xiffy">
 		<title>de correspondent, de artikelen</title>
 		<link rel="stylesheet" href="./style2.css" />
@@ -46,7 +46,7 @@ if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 $i = 0;
 $res = mysql_query('select artikelen.*, count(tweets.id) as tweet_count from artikelen left outer join tweets on tweets.art_id = artikelen.id group by artikelen.id '.$order_by.' limit '.$start.','.ITEMS_PER_PAGE);
 ?>
-		<h1>Artikelen van <a href="http://decorrespondent.nl/">de Correspondent</a> gevonden op Twitter <a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a><a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a></h1>
+		<h1>Artikelen van <a href="http://www.nrc.nl/">nrc.nl</a> gevonden op Twitter</h1>
 <?php include ('menu.php'); ?>
 		<div class="center">
 		<table>
