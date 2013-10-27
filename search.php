@@ -33,7 +33,7 @@ $i = 0;
 while($row = mysql_fetch_array($res) )
 {
 	$og = unserialize(stripslashes($row['og']));
-	$titel = isset($og['title']) ? $og['title'] : substr($row['clean_url'],26);
+	$titel = isset($og['title']) ? $og['title'] : substr($row['clean_url'],18,50);
 	$description = isset($og['description']) ? $og['description'] : 'Een mysterieus artikel';
 	$auth_res = mysql_query('select * from meta where meta.waarde = "'.$og['article:author'].'"');
 	$author = mysql_fetch_array($auth_res);

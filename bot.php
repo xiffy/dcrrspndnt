@@ -149,7 +149,12 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 						}
 						if (empty($og['article:section']))
 						{ // voorlopig even de auteur dumpen
-							$og['article:section'] = $og['article:author'];
+							if( $parsed['host'] == 'archief.nrc.nl' )
+								$og['article:section'] = 'archief';
+							elseif( $parsed['host'] == 'vorige.nrc.nl' )
+								$og['article:section'] = 'vorige';
+							else
+								$og['article:section'] = $og['article:author'];
 						}
 						// herstel &amp;amp;
 						foreach($og as $key => $value)

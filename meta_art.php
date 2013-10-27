@@ -70,7 +70,7 @@ $art_res = mysql_query ('select artikelen.*, count(tweets.id) as tweet_count fro
 while($row = mysql_fetch_array($art_res))
 {
 	$og = unserialize(stripslashes($row['og']));
-	$titel = isset($og['title']) ? $og['title'] : substr($row['clean_url'],26);
+	$titel = isset($og['title']) ? $og['title'] : substr($row['clean_url'],18,50);
 	$description = isset($og['description']) ? $og['description'] : 'Een mysterieus artikel';
 	$display_time = isset($og['article:published_time']) ? strftime('%e %b %H:%M', $og['article:published_time']) : substr($row['created_at'],8,2).'-'.substr($row['created_at'],5,2).' '.substr($row['created_at'],11,5);
 	$found_at = substr($row['created_at'],8,2).'-'.substr($row['created_at'],5,2).' '.substr($row['created_at'],11,5);
