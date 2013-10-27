@@ -105,19 +105,48 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 								$og[$key] = stripslashes($meta->content);
 							}
 						}
+						$author_found = 0;
 						foreach( $html->find('div[class=author]') as $author)
 						{ // this works for nrc.nl !! :-)
+							// <span>door<a href="">auterusnaam</a></span>
 							$og['article:author'] = $author->first_child()->first_child()->innertext;
 							echo 'Found author: '.$og['article:author']."\n";
+							$author_found = 1;
 						}
-					}
-					if (SEND_TWEETS == 1)
-					{
-						$tweet_text = $og['article:author'] .': '.$og['title'];
-						$tweet_text = str_replace('&#039;', "'", $tweet_text);
+						if($author_found == 0)
+						{
+							// we hebben ook nog chartbeat info:
+							// <div id="chartbeat-config" data-sections="" data-authors="Youp"></div>
+							foreach($html->find('div[id=chartbeat-config]') as $chartbeatconfig)
+							{
+								$og['article:author'] = $chartbeatconfig->{"data-authors"};
+								echo 'Found author via chartbeat: '.$og['article:author']."\n";
+								$author_found = 1;
+							}
+						}
+						foreach ($html->find('meta[property^=ad:categories]') as $categories)
+						{
+							$cats = explode(',', $categories->content);
+							echo 'Found categories: '.$categories."\n";
+							foreach($cats as $cat)
+							{
+								$cat = trim($cat);
+								if($cat == 'Nieuws')
+									continue;
+								$og['article:section'] = $cat;
+								echo 'Assigned section: '.$cat."\n";
+							}
+						}
+						if (empty($og['article:section']))
+						{ // voorlopig even de auteur dumpen
+							$og['article:section'] = $og['article:author'];
+						}
 					}
 					// nu mogen we serializen
 					$og = serialize($og);
+					// share url ook van m.nrc.nl ontdoen...
+					if( strstr($share,'m.nrc.nl') )
+						$share = str_replace('m.nrc.nl', 'www.nrc.nl', $share);
 
 					echo 'inserting: insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.substr($og,0,20).'")'."\n";
 					mysql_query('insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.addslashes($og).'")');
@@ -126,33 +155,6 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 					{
 						echo 'counting tweet '.$tweet->id."\n";
 						mysql_query('insert into tweets (tweet_id, art_id) values ("'.$tweet->id.'", '.mysql_insert_id().')');
-					}
-
-					// stuur er ook een tweet uit op het speciale twitter account:
-					if (SEND_TWEETS == 1)
-					{
-						$tw_text = substr($tweet_text, 0, 140 - 25).' '.$share;
-
-						echo "sending tweet: {$tw_text} \n";
-						$connection = new TwitterOAuth(
-																	OUTGOING_CONSUMER_KEY,
-																	OUTGOING_CONSUMER_SECRET,
-																	OUTGOING_OAUTH_KEY,
-																	OUTGOING_OAUTH_SECRET);
-						$connection->useragent = 'dcrrspndt tweet-bot';
-						$connection->post(
-							'https://api.twitter.com/1.1/statuses/update.json',
-							array(
-								'status' => $tw_text,
-								'source' => 'molecule.nl/decorrespondent',
-								'callback_url' => 'http://molecule.nl/decorrespondent'
-							)
-						);
-						if (strcmp($connection->http_code, '200') == 0)
-							echo "Tweet sent \n";
-						else
-							echo "Posting failed. Twitter down?".$connection->http_code."\n";
-
 					}
 				}
 			}
