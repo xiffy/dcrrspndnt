@@ -39,7 +39,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 		$tco = $url->url;
 
 		$share = $url->expanded_url;
-		if(! strstr($share, 'decorrespondent'))
+		if(! strstr($share, 'nrc.nl'))
 		{
 			$short = $share;
 			$short_res = mysql_query('select * from unshorten where short_url = "'.$short.'"');
@@ -57,25 +57,24 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 				$share = $short_arr['url'];
 			}
 		}
-		if(strstr($share, 'decorrespondent'))
+		if(strstr($share, 'nrc.nl'))
 		{
-			if (strstr($share, 'http://'))
-				$share = str_replace('http:', 'https:', $share);
 
 			$parsed = parse_url ($share);
 			if (isset($parsed['path']))
 			{
-				if (! strstr($parsed['host'], 'decorrespondent.nl') || $parsed['host'] == 'blog.decorrespondent.nl' || $parsed['host'] == 'dynamic.decorrespondent.nl')
+				if (! strstr($parsed['host'], 'nrc.nl') )
 				{
-//					echo 'skipping: '.$share."\n";
+					echo 'skipping: '.$share."\n";
 					continue;
 				}
 				$path = $parsed['path'];
-				$path = explode('/', $path);
-				if(isset($path[2]) && isset($path[3]))
+				$path_p = explode('/', $path);
+				if(isset($path_p[1]))
 				{
-					$path = $path[1].'/'.$path[2];
-					$clean = $parsed['scheme'].'://'.$parsed['host'].'/'.$path;
+					if($parsed['host'] == 'm.nrc.nl')
+						$parsed['host'] = 'www.nrc.nl';
+					$clean = $parsed['scheme'].'://'.$parsed['host'].$path;
 					$query = 'select * from artikelen where clean_url = "'.$clean.'"';
 					$res = mysql_query($query);
 					if(mysql_num_rows($res))
