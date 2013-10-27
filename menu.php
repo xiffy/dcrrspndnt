@@ -12,11 +12,18 @@
 	<li><strong> Auteurs</strong> &#9660;
 		<ul>
 			<?php
-$r = mysql_query('select * from meta where meta.type = "article:author" order by waarde');
+$r = mysql_query('select count(artikelen.id) as aantal_art, meta.*
+from meta
+join meta_artikel on meta.id = meta_id
+left join artikelen on artikelen.id = art_id
+where meta.type = "article:author"
+group by meta.id
+order by count(artikelen.id) desc, waarde
+limit 0,25');
 while($row = mysql_fetch_array($r))
 {
 ?>
-				<li><a href="./meta_art.php?id=<?php echo $row['ID']?>"><div><?php echo $row['waarde'] ?></div></a></li>
+				<li><a href="./meta_art.php?id=<?php echo $row['ID']?>"><div><?php echo $row['waarde'] ?> (<?php echo $row['aantal_art'] ?>)</div></a></li>
 <?php
 }
 ?>
@@ -25,28 +32,21 @@ while($row = mysql_fetch_array($r))
 	<li><strong> Secties</strong> &#9660;
 		<ul>
 <?php
-$r = mysql_query('select * from meta where meta.type = "article:section" order by waarde');
+$r = mysql_query('select count(artikelen.id) as aantal_art, meta.*
+from meta
+join meta_artikel on meta.id = meta_id
+left join artikelen on artikelen.id = art_id
+where meta.type = "article:section"
+group by meta.id
+order by count(artikelen.id) desc, waarde
+limit 0,25');
 while($row = mysql_fetch_array($r))
 {
 ?>
-				<li><a href="./meta_art.php?id=<?php echo $row['ID']?>"><div><?php echo $row['waarde'] ?></div></a></li>
+				<li><a href="./meta_art.php?id=<?php echo $row['ID']?>"><div><?php echo $row['waarde'] ?> (<?php echo $row['aantal_art'] ?>)</div></a></li>
 <?php
 }
 ?>
 		</ul>
-	</li>
-	<li class="small">
-		<?php
-		if(isset($meta_id))
-		{ ?>
-		<a href="./rss.php?id=<?php echo $meta_id;?>" title="RSS Feed"><strong>RSS </strong><img src="img/ikoon.rss.png" /></a>
-		<?php
-		}
-		else
-		{ ?>
-		<a href="./rss.php" title="RSS Feed"><strong>RSS </strong><img src="img/ikoon.rss.png" /></a>
-		<?php
-		}
-		?>
 	</li>
 </ul>
