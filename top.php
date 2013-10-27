@@ -66,7 +66,7 @@ if(isset($_GET['mode']))
 $i = 0;
 $res = mysql_query('select artikelen.*, count(tweets.id) as tweet_count from artikelen left outer join tweets on tweets.art_id = artikelen.id '.$mode.' group by artikelen.id having tweet_count > 0 '.$order_by.' limit '.$start.',50');
 ?>
-		<h1><?php echo $title;?> <a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a><a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a></h1>
+		<h1><?php echo $title;?></h1>
 <?php include ('menu.php'); ?>
 		<div class="center">
 		<table>
