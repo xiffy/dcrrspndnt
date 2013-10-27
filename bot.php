@@ -42,7 +42,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 		if(! strstr($share, 'nrc.nl'))
 		{
 			$short = $share;
-			$short_res = mysql_query('select * from unshorten where short_url = "'.$short.'"');
+			$short_res = mysql_query('select * from unshorten where short_url = "'.addslashes($short).'"');
 			if(mysql_num_rows($short_res) == 0)
 			{
 				echo $short."\n";
@@ -64,7 +64,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 			if (isset($parsed['path']))
 			{
 				if (! strstr($parsed['host'], 'nrc.nl') || strstr($parsed['host'], 'actie.nrc.nl') || strstr($parsed['host'
-				], 'zoeken.nrc.nl' )
+				], 'zoeken.nrc.nl' ))
 				{
 					echo 'skipping: '.$share."\n";
 					continue;
@@ -86,7 +86,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 							$tweet_res = mysql_query('select * from tweets where art_id = '.$art_row['ID'].' and tweet_id = "'.$tweet->id.'"');
 							if (mysql_num_rows($tweet_res) == 0)
 							{
-								echo 'counting tweet '.$tweet->id."\n";
+								echo 'Make it count! tweet: '.$tweet->id."\n";
 								mysql_query('insert into tweets (tweet_id, art_id) values ("'.$tweet->id.'", '.$art_row['ID'].')');
 							}
 						}
