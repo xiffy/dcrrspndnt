@@ -76,7 +76,16 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 					if($parsed['host'] == 'm.nrc.nl')
 						$parsed['host'] = 'www.nrc.nl';
 					$clean = $parsed['scheme'].'://'.$parsed['host'].$path;
-					$query = 'select * from artikelen where clean_url = "'.$clean.'"';
+					// en als 't laatste teken nou eens geen '/' is? anders krijgen we
+					// http://www.nrc.nl/boeken/2013/10/27/eerste-jan-wolkers-prijs-naar-simon-van-der-geest/ en
+					// http://www.nrc.nl/boeken/2013/10/27/eerste-jan-wolkers-prijs-naar-simon-van-der-geest in de database :-(
+					$clean_plus = $clean;
+					if ('/' != $clean[strlen($clean)-1])
+					{
+						$clean_plus = $clean.'/';
+					}
+
+					$query = 'select * from artikelen where clean_url in ("'.$clean.'", "'.$clean_plus.'")';
 					$res = mysql_query($query);
 					if(mysql_num_rows($res))
 					{
