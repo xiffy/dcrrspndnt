@@ -141,7 +141,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 							foreach($cats as $cat)
 							{
 								$cat = trim($cat);
-								if($cat == 'Nieuws')
+								if($cat == 'Nieuws' || $cat == 'Beste van het web')
 									continue;
 								$og['article:section'] = $cat;
 								echo 'Assigned section: '.$cat."\n";
