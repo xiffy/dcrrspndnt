@@ -13,9 +13,8 @@ $display_string = htmlspecialchars($_GET['q']);
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>de correspondent, zoekresultaten</title>
+		<title>nrc.nl, zoekresultaten</title>
 		<link rel="stylesheet" href="./style2.css" />
-		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
 	</head>
 	<body id="meta_art">
 		<h1>Artikelen die "<?php echo $display_string;?>" bevatten</h1>
@@ -60,5 +59,4 @@ while($row = mysql_fetch_array($res) )
 </div>
 <?php include('footer.php') ?>
 </body>
-<?php @include('ga.inc.php') ?>
 </html>
