@@ -134,11 +134,13 @@ $scaleWidth2 = ceil($high / 10);
 				}
 				var tweetTot = new Chart(document.getElementById("tot_tweets").getContext("2d")).Bar(barChartData, barOptions);
 			</script>
+			<p>maximaal dertig dagen </p>
 
 			<h2>Tweets per uur</h2>
 			<canvas id="hour_tweets" height="450" width="800"></canvas>
 			<script>
 				var lineOptions = {
+					pointDot : false, //line
 					scaleOverride : 1,
 					scaleSteps : 10,
 					//Number - The value jump in the hard coded scale
