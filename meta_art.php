@@ -16,9 +16,10 @@ $th_related = $mode == 'author' ? 'auteurs' : 'secties';
 $extra_query_var = $mode == 'author' ? 'article:section' : 'article:author';
 
 // paging dr. beat:
-$count_res = mysql_query('select count(artikelen.*) as amount from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.meta_id = '.$meta_id);
+$count_res = mysql_query('select count(artikelen.id) as amount from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.meta_id = '.$meta_id);
 $count_arr = mysql_fetch_array($count_res);
 $tot_row = $count_arr['amount'];
+
 $start = 0;
 if(isset($_GET['page']))
 {
@@ -28,7 +29,7 @@ if(isset($_GET['page']))
 }
 
 $order_by = ' order by created_at desc ';
-$qsa = '';
+$qsa = '&amp;id='.$meta_id;
 $th_pubdate = '<th>Gepubliceerd</th>';
 $sep = strstr($_SERVER['REQUEST_URI'], '?') ? '&amp;' : '?';
 $th_tweets = '<th class="sortable"><a href="'.$_SERVER['REQUEST_URI'].$sep.'order=tweets" title="Sorteer op aantal maal gedeeld" >tweets</a>&#9660;</th>';
@@ -36,8 +37,8 @@ $th_tweets = '<th class="sortable"><a href="'.$_SERVER['REQUEST_URI'].$sep.'orde
 if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 {
 	$order_by = ' order by tweet_count desc ';
-	$qsa = '&amp;order=tweets'; // voor de pager
-	$th_pubdate = '<th class="sortable"><a href="./?page='.$page.'" title="Sorteer op publicatiedatum">Gepubliceerd</a>&#9660;</th>';
+	$qsa .= '&amp;order=tweets'; // voor de pager
+	$th_pubdate = '<th class="sortable"><a href="./meta_art.php?id='.$meta_id.'&amp;page='.$page.'" title="Sorteer op publicatiedatum">Gepubliceerd</a>&#9660;</th>';
 	$th_tweets = '<th>tweets</th>';
 }
 

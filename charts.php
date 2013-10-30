@@ -36,18 +36,25 @@ while ($row = mysql_fetch_array($tot_tweets_res))
 }
 $rows = array_reverse($rows);
 
+$cur_month = '';
 foreach($rows as $row)
 {
-	$label[] = $row['dag'];
+	$lab = $row['dag'];
+	if (! $row['maand'] == $cur_month)
+	{
+		$lab .= '-'.$row['maand'];
+		$cur_month = $row['maand'];
+	}
+	$label[] = $lab;
 	$tweets[] = $row['tweet_count'];
-	$high = max($high, $row['tweet_count'] + 100);
+	$high = max($high, $row['tweet_count'] + 10);
 }
 $scaleWidth = ceil($high / 10);
 
 $bar_label = '';
 foreach($label as $lab)
 {
-	$bar_label .= $lab.',';
+	$bar_label .= '"'.$lab.'",';
 }
 $bar_label = substr($bar_label, 0, strlen($bar_label) - 1);
 $bar_tweet_data = '';
@@ -74,7 +81,7 @@ while ($row = mysql_fetch_array($graph_res))
 	$hour_label .= $row['per_uur'].',';
 	$tot = ceil($row['tweet_count'] / $dagen);
 	$hour_tweet_data .= $tot.',';
-	$high = max($high, $tot + 20);
+	$high = max($high, $tot + 10);
 }
 
 $hour_label = substr($hour_label, 0, strlen($hour_label) - 1);
@@ -98,10 +105,15 @@ while ($row = mysql_fetch_array($res_today))
 		$hour_today_data .= '0,';
 		$i++;
 	}
-	$high = max($high, $row['per_hour'] + 20);
+	$high = max($high, $row['per_hour'] + 10);
 	$hour_today_data .= $row['per_hour'].',';
 	$i++;
 }
+// add one zero for the current hour if the day isn't full yet
+// specially for the night
+if($i < 23)
+	$hour_today_data .= '0,';
+
 $hour_today_data = substr($hour_today_data, 0, strlen($hour_today_data) - 1);
 $scaleWidth2 = ceil($high / 10);
 
@@ -116,6 +128,9 @@ $scaleWidth2 = ceil($high / 10);
 			<canvas id="tot_tweets" height="450" width="800"></canvas>
 			<script>
 				var barOptions = {
+					barValueSpacing : 1, // bar
+					barDatasetSpacing : 1, // bar
+
 					scaleOverride : 1,
 					scaleSteps : 10,
 					//Number - The value jump in the hard coded scale
