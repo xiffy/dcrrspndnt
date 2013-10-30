@@ -76,10 +76,14 @@ $graph_res = mysql_query("select count(tweets.id) as tweet_count, hour(tweets.cr
 $high = 0;
 $hour_label = '';
 $hour_tweet_data = '';
+$uur_nu = date('H');
+$minuut_nu = date('i');
+
 while ($row = mysql_fetch_array($graph_res))
 {
 	$hour_label .= $row['per_uur'].',';
-	$tot = ceil($row['tweet_count'] / $dagen);
+	$deler = (int)$row['the_uur'] > (int)$uur_nu ? $dagen - 1 : $dagen;
+	$tot = ceil($row['tweet_count'] / $deler);
 	$hour_tweet_data .= $tot.',';
 	$high = max($high, $tot + 10);
 }
@@ -108,11 +112,22 @@ while ($row = mysql_fetch_array($res_today))
 	$high = max($high, $row['per_hour'] + 10);
 	$hour_today_data .= $row['per_hour'].',';
 	$i++;
+	if( (int)$row['the_hour'] == (int)$uur_nu)
+	{ // make projection; 12 times per hour, which time are we?
+
+		$hour_part = floor($minuut_nu / 5) + 1;
+
+		$projection = floor((12 / $hour_part) * (int)$row['per_hour']);
+
+		$j = 0;
+		while($j < (int)$uur_nu) // naar de juiste plek brengen ...
+		{
+			$projection_data .= ' ,';
+			$j++;
+		}
+		$projection_data .= $projection;
+	}
 }
-// add one zero for the current hour if the day isn't full yet
-// specially for the night
-if($i < 23)
-	$hour_today_data .= '0,';
 
 $hour_today_data = substr($hour_today_data, 0, strlen($hour_today_data) - 1);
 $scaleWidth2 = ceil($high / 10);
@@ -155,7 +170,10 @@ $scaleWidth2 = ceil($high / 10);
 			<canvas id="hour_tweets" height="450" width="800"></canvas>
 			<script>
 				var lineOptions = {
-					pointDot : false, //line
+					pointDot : true, //line
+					pointDotRadius : 3,
+					pointDotStrokeWidth : 1,
+
 					scaleOverride : 1,
 					scaleSteps : 10,
 					//Number - The value jump in the hard coded scale
@@ -179,6 +197,13 @@ $scaleWidth2 = ceil($high / 10);
 										   	pointColor : "rgba(192,8,14,1)",
 										   	pointStrokeColor : "#000",
 										   	data: [<?php echo $hour_today_data;?>]
+										  },
+										  	{
+										   	fillColor	  : "rgba(61,186,0,0.0)",
+										   	strokeColor : "#FFEB9D",
+										   	pointColor : "#FFEB9D",
+										   	pointStrokeColor : "rgba(192,8,14,1)",
+										   	data: [<?php echo $projection_data;?>]
 										  }
 										 ]
 				}
