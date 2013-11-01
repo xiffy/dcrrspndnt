@@ -24,7 +24,7 @@ include('db.php');
 
 // Grafiek 1; tweets per dag
 
-$tot_tweets_res = mysql_query('select count(tweets.id) as tweet_count, day(tweets.created_at) as  dag, month(tweets.created_at) as maand from tweets where created_at > "2013-10-13 21:00" group by maand, dag order by day(tweets.created_at) desc limit 0,30');
+$tot_tweets_res = mysql_query('select count(tweets.id) as tweet_count, day(tweets.created_at) as  dag, month(tweets.created_at) as maand from tweets where created_at > "2013-10-13 21:00" group by maand, dag order by year(tweets.created_at) desc, month(tweets.created_at) desc, day(tweets.created_at) desc limit 0,30');
 
 $label = array();
 $tweets = array();
@@ -40,7 +40,7 @@ $cur_month = '';
 foreach($rows as $row)
 {
 	$lab = $row['dag'];
-	if (! $row['maand'] == $cur_month)
+	if ( (int)$row['maand'] != (int)$cur_month)
 	{
 		$lab .= '-'.$row['maand'];
 		$cur_month = $row['maand'];
