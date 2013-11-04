@@ -8,9 +8,6 @@
 		<title>de correspondent, de tweets in grafieken</title>
 		<link rel="stylesheet" href="./style2.css" />
 		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
-		<?php
-		@include('./tinypass.js');
-		?>
 
 		<script src="Chart.min.js"></script>
 	</head>
