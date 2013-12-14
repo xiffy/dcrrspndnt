@@ -98,12 +98,32 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 					$og = array();
 					if (is_object($html))
 					{
-						foreach( $html->find('meta[property^=og:], meta[name^=twitter:], meta[property^=twitter:]') as $meta )
+						foreach( $html->find('meta[property^=og:], meta[name^=twitter:], meta[property^=twitter:], meta[property^=article:]') as $meta )
 						{
 							if(strstr($meta->property, 'og:'))
 							{
 								$key = substr($meta->property,3);
 								$og[$key] = stripslashes($meta->content);
+							}
+							// meh dit is weer eens nieuw
+							if(strstr($meta->property, 'article:'))
+							{
+								$key = $meta->property;
+								$og[$key] = stripslashes($meta->content);
+							}
+						}
+						// auteur is nu een uri, leuk maar liever hebben we de naam
+						// staat ergens in een javascript var zonder meuk
+						foreach($html->find('script') as $script)
+						{
+							if (strstr($script->innertext, 'a_author'))
+							{
+								$author = preg_match('%a_author.*:.*\'(.*)\'%Uu', $script->innertext, $matches);
+								print_r($matches);
+								if(isset($matches[1]))
+								{
+									$og['article:author'] = $matches[1];
+								}
 							}
 						}
 					}
