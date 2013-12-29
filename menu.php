@@ -3,9 +3,9 @@
 		<ul>
 			<li><a href="./"><div> Alle artikelen</div></a></li>
 			<li><a href="./top.php"><div> Populiare artikelen</div></a></li>
-			<li><a href="./top.php?mode=week"><div> Populiare artikelen (deze week)</div></a></li>
-			<li><a href="./top.php?mode=day"><div> Populiare artikelen (vandaag)</div></a></li>
-			<li><a href="./top.php?mode=hour"><div> Populiare artikelen (dit uur)</div></a></li>
+			<li><a href="./top.php?mode=week"><div> Populaire artikelen (deze week)</div></a></li>
+			<li><a href="./top.php?mode=day"><div> Populaire artikelen (vandaag)</div></a></li>
+			<li><a href="./top.php?mode=hour"><div> Populaire artikelen (dit uur)</div></a></li>
 			<li><a href="./charts.php"><div> Grafiekje </div></a></li>
 		</ul>
 	</li>
@@ -62,5 +62,5 @@ while($row = mysql_fetch_array($r))
                 <?php
                 }
                 ?>
-        </li>
+  </li>
 </ul>

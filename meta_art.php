@@ -79,8 +79,21 @@ while($row = mysql_fetch_array($art_res))
 	$og = unserialize(stripslashes($row['og']));
 	$titel = isset($og['title']) ? $og['title'] : substr($row['clean_url'],26);
 	$description = isset($og['description']) ? $og['description'] : 'Een mysterieus artikel';
-	$display_time = isset($og['article:published_time']) ? strftime('%e %b %H:%M', $og['article:published_time']) : substr($row['created_at'],8,2).'-'.substr($row['created_at'],5,2).' '.substr($row['created_at'],11,5);
 	$found_at = substr($row['created_at'],8,2).'-'.substr($row['created_at'],5,2).' '.substr($row['created_at'],11,5);
+
+	if(isset($og['article:published_time']))
+	{
+		if(strstr($og['article:published_time'], '-'))
+		{
+			$display_time = strftime('%e %b %H:%M', strtotime($og['article:published_time']));
+		}
+		else
+		{
+			$display_time = strftime('%e %b %H:%M', $og['article:published_time']);
+		}
+	}
+	else
+		$display_time = substr($row['created_at'],8,2).'-'.substr($row['created_at'],5,2).' '.substr($row['created_at'],11,5);
 
 	$r = mysql_query ('select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = '.$row['ID'].' and meta.type = "'.$extra_query_var.'"');
 	$extra_arr = mysql_fetch_array($r);
