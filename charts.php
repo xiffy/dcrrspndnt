@@ -65,7 +65,7 @@ $bar_tweet_data = substr($bar_tweet_data, 0, strlen($bar_tweet_data) - 1);
 
 // Grafiek 2;
 // Tweets per uur en de dagtrend daar op afgezet
-$dagen_res = mysql_query("select day(tweets.created_at) as dagen from tweets group by dagen");
+$dagen_res = mysql_query("select date(tweets.created_at) as dagen from tweets group by dagen");
 $dagen = mysql_num_rows($dagen_res);
 
 $graph_res = mysql_query("select count(tweets.id) as tweet_count, hour(tweets.created_at) as per_uur from tweets where created_at > \"2013-10-13 21:00\" group by per_uur ");

@@ -23,7 +23,7 @@ $oauth = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, OAUTH_KEY, OAUTH_SECRET
 $oauth->useragent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.9) Gecko/20071025 Firefox/13.6.0.9';
 
 $tweets_found = json_decode(
-                  $oauth->get( 'http://api.twitter.com/1.1/search/tweets.json',
+                  $oauth->get( 'https://api.twitter.com/1.1/search/tweets.json',
                                 array('q' => $query,
                                       'count' => 100,
                                       'since_id' => $since,
@@ -172,7 +172,10 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 		}
 	}
 }
-
+else
+{
+	print_r($tweets_found);
+}
 // alle meta-waardes wegschrijven in de meta-table voor makkelijker cross-linken:
 // selecteer alle artikelen die geen meta_artikel rows bezitten
 $res = mysql_query ('select artikelen.ID as art_id, og from artikelen left outer join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.art_id IS NULL');
