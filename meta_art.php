@@ -9,7 +9,7 @@ $meta_res = mysql_query('select * from meta where ID = '.$meta_id);
 $meta_row = mysql_fetch_array($meta_res);
 // determine in what mode we are running; Author or Section?
 $mode = explode(':', $meta_row['type']);
-$mode = isset($mode[1]) ? $mode[1] : $mode;
+$mode = isset($mode[1]) ? $mode[1] : 'get off';
 $title_by_in = $mode == 'author' ? 'door' : 'in de sectie';
 $th_extra = $mode == 'author' ? 'sectie' : 'auteur';
 $th_related = $mode == 'author' ? 'auteurs' : 'secties';
@@ -26,7 +26,7 @@ if(isset($_GET['page']))
 	$page = (int)$_GET['page'];
 	$start = ($page - 1) * ITEMS_PER_PAGE;
 	if($start < 0) $start = 0;
-}
+} else $page = 1;
 
 $order_by = ' order by created_at desc ';
 $qsa = '&amp;id='.$meta_id;
@@ -50,7 +50,7 @@ if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 		<meta name="description" content="dcrrspndnt, indexer van gedeelde artikelen van De Correspondent, http://decorrespondent.nl", lees alle gedeelde artikelen op twitter gratis via http://molecule.nl/decorrespondent/>
 		<meta name="author" content="xiffy">
 
-		<title>de Correspondent, artikelen <?php echo $title_by_in; ?>: <?php echo $meta_row['waarde'].' ('.$mode.')';?></title>
+		<title>de Correspondent, artikelen <?php echo (string)$title_by_in; ?>: <?php echo (string)$meta_row['waarde'].' ('.$mode.')';?></title>
 		<link rel="stylesheet" href="./style2.css" />
 		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
 		<?php
@@ -72,7 +72,7 @@ if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 			</tr>
 <?php
 $i = 0;
-$art_res = mysql_query ('select artikelen.*, count(tweets.id) as tweet_count from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id left outer join tweets on tweets.art_id = artikelen.ID where meta_artikel.meta_id = '.$meta_id.' group by artikelen.ID '.$order_by.' limit '.$start.','.ITEMS_PER_PAGE);
+$art_res = mysql_query ('select artikelen.* from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.meta_id = '.$meta_id.' group by artikelen.ID '.$order_by.' limit '.$start.','.ITEMS_PER_PAGE);
 
 while($row = mysql_fetch_array($art_res))
 {
@@ -134,7 +134,7 @@ while($row = mysql_fetch_array($art_res))
 <?php include('search_box.php'); ?>
 <?php
 // grafiekje tweets per dag over deze meta (auteur of sectie)
-$graph_res = mysql_query("select count(tweets.id) as tweet_count, day(tweets.created_at) as dag, month(tweets.created_at) as maand from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id left outer join tweets on tweets.art_id = artikelen.ID where meta_artikel.meta_id = {$meta_id} and not day(tweets.created_at) is null group by maand, dag");
+$graph_res = mysql_query("select count(tweets.id) as tweet_count, day(tweets.created_at) as dag, month(tweets.created_at) as maand from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id left outer join tweets on tweets.art_id = artikelen.ID where meta_artikel.meta_id = {$meta_id} and not day(tweets.created_at) is null and tweets.created_at >= date_sub(now(), interval 6 month) group by maand, dag");
 
 $high = 0;
 $bar_label = '';

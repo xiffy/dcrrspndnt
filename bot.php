@@ -88,6 +88,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 							{
 								echo 'counting tweet '.$tweet->id."\n";
 								mysql_query('insert into tweets (tweet_id, art_id) values ("'.$tweet->id.'", '.$art_row['ID'].')');
+								mysql_query('update artikelen set tweet_count = tweet_count + 1 where artikelen.ID = '.$art_row['ID']);
 							}
 						}
 
@@ -139,6 +140,8 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 					{
 						echo 'counting tweet '.$tweet->id."\n";
 						mysql_query('insert into tweets (tweet_id, art_id) values ("'.$tweet->id.'", '.mysql_insert_id().')');
+						mysql_query('update artikelen set tweet_count = tweet_count + 1 where artikelen.ID = '.$art_row['ID']);
+
 					}
 
 					// stuur er ook een tweet uit op het speciale twitter account:

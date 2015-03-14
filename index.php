@@ -41,7 +41,7 @@ if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 }
 
 $i = 0;
-$res = mysql_query('select artikelen.*, count(tweets.id) as tweet_count from artikelen left outer join tweets on tweets.art_id = artikelen.id group by artikelen.id '.$order_by.' limit '.$start.','.ITEMS_PER_PAGE);
+$res = mysql_query('select artikelen.* from artikelen group by artikelen.id '.$order_by.' limit '.$start.','.ITEMS_PER_PAGE);
 ?>
 		<h1>Artikelen van <a href="http://decorrespondent.nl/">de Correspondent</a> gevonden op Twitter <a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a><a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a></h1>
 <?php include ('menu.php'); ?>
