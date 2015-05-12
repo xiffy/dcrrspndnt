@@ -50,7 +50,7 @@ while($row = mysql_fetch_array($res) )
 ?>
 		<item>
 			<title><?php echo $titel;?></title>
-			<link><?php echo $row['share_url']?></link>
+			<link><?php echo str_replace('&', '&amp;', $row['share_url'])?></link>
 			<description><?php echo $description ?></description>
 			<dc:creator><?php echo $author['waarde'];?></dc:creator>
 			<guid><?php echo $row['clean_url'];?></guid>
