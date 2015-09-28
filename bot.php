@@ -39,6 +39,7 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 		$tco = $url->url;
 
 		$share = $url->expanded_url;
+echo $share."\n";
 		if(! strstr($share, 'decorrespondent'))
 		{
 			$short = $share;
@@ -135,13 +136,16 @@ if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
 
 					echo 'inserting: insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.substr($og,0,20).'")'."\n";
 					mysql_query('insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.addslashes($og).'")');
+					$artikel_id = mysql_insert_id();
+					// if mysql failed be sure not to send a tweet
+					if (! $artikel_id)
+						continue;
 
 					if (COUNT_TWEETS == 1)
 					{
 						echo 'counting tweet '.$tweet->id."\n";
-						mysql_query('insert into tweets (tweet_id, art_id) values ("'.$tweet->id.'", '.mysql_insert_id().')');
-						mysql_query('update artikelen set tweet_count = tweet_count + 1 where artikelen.ID = '.$art_row['ID']);
-
+						mysql_query('insert into tweets (tweet_id, art_id) values ("'.$tweet->id.'", '.$artikel_id.')');
+						mysql_query('update artikelen set tweet_count = tweet_count + 1 where artikelen.ID = '.$artikel_id);
 					}
 
 					// stuur er ook een tweet uit op het speciale twitter account:
