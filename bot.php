@@ -135,7 +135,7 @@ echo $share."\n";
 					$og = serialize($og);
 
 					echo 'inserting: insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.substr($og,0,20).'")'."\n";
-					mysql_query('insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.addslashes($og).'")');
+					mysql_query('insert into artikelen (t_co, clean_url, share_url, og, tweet_count) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.addslashes($og).'", 0)');
 					$artikel_id = mysql_insert_id();
 					// if mysql failed be sure not to send a tweet
 					if (! $artikel_id)
