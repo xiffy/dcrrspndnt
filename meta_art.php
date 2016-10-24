@@ -10,6 +10,15 @@ $meta_row = mysql_fetch_array($meta_res);
 // determine in what mode we are running; Author or Section?
 $mode = explode(':', $meta_row['type']);
 $mode = isset($mode[1]) ? $mode[1] : 'get off';
+if ($mode != 'author' && $mode != 'section') {
+	$mode = 'get off';
+}
+
+if($mode == 'get off') {
+	http_response_code(410);
+	die ('you have no business here. you\'re just guessing');
+}
+
 $title_by_in = $mode == 'author' ? 'door' : 'in de sectie';
 $th_extra = $mode == 'author' ? 'sectie' : 'auteur';
 $th_related = $mode == 'author' ? 'auteurs' : 'secties';

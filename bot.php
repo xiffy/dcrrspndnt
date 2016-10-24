@@ -6,13 +6,10 @@ require_once('settings.local.php');
 // Create our twitter API object
 require_once("twitteroauth.php");
 include_once ('simple_html_dom.php');
-
 // database, mysql, why not?
 include('db.php');
 
-
 $since = get_since();
-
 echo 'sinds: '.$since."\n";
 // go to https://dev.twitter.com/apps and create new application
 // and obtain [CONSUMER_KEY], [CONSUMER_SECRET], [oauth_key], [oauth_secret]
@@ -30,16 +27,24 @@ $tweets_found = json_decode(
                                       'result_type' => 'recent')
                               )
                             );
+$tweets = array();
 if(is_object($tweets_found)) foreach ($tweets_found->statuses as $tweet){
-	//print_r($tweet->entities->urls);
-	update_since($tweet->id);
+	$tweets[] = $tweet;
+}
+if (count($tweets)) {
+	$tweets = array_reverse($tweets);
+} else {
+	die ('Nothing found');
+}
 
+foreach ($tweets as $tweet)
+{	//print_r($tweet->entities->urls);
+	update_since($tweet->id);
 	foreach($tweet->entities->urls as $url)
 	{
 		$tco = $url->url;
-
 		$share = $url->expanded_url;
-echo $share."\n";
+		echo $share."\n";
 		if(! strstr($share, 'decorrespondent'))
 		{
 			$short = $share;
@@ -58,17 +63,19 @@ echo $share."\n";
 				$share = $short_arr['url'];
 			}
 		}
+
 		if(strstr($share, 'decorrespondent'))
 		{
 			if (strstr($share, 'http://'))
+			{
 				$share = str_replace('http:', 'https:', $share);
+			}
 
 			$parsed = parse_url ($share);
 			if (isset($parsed['path']))
 			{
 				if (! strstr($parsed['host'], 'decorrespondent.nl') || $parsed['host'] == 'blog.decorrespondent.nl' || $parsed['host'] == 'dynamic.decorrespondent.nl')
 				{
-//					echo 'skipping: '.$share."\n";
 					continue;
 				}
 				$path = $parsed['path'];
@@ -114,19 +121,11 @@ echo $share."\n";
 								$og[$key] = stripslashes($meta->content);
 							}
 						}
-						// auteur is nu een uri, leuk maar liever hebben we de naam
-						// staat ergens in een javascript var zonder meuk
-						foreach($html->find('script') as $script)
-						{
-							if (strstr($script->innertext, 'a_author'))
-							{
-								$author = preg_match('%a_author.*:.*\'(.*)\'%Uu', $script->innertext, $matches);
-								print_r($matches);
-								if(isset($matches[1]))
-								{
-									$og['article:author'] = $matches[1];
-								}
-							}
+						foreach($html->find('meta[name=author]') as $author) {
+							$og['article:author'] = stripslashes($author->content);
+						}
+						foreach($html->find('div[class=publication-authors-department]') as $section) {
+							$og['article:section'] = str_replace(array('Gastcorrespondent ', 'Correspondent '), '', $section->plaintext);
 						}
 					}
 					$tweet_text = $og['article:author'] .': '.$og['title'];
@@ -155,10 +154,11 @@ echo $share."\n";
 
 						echo "sending tweet: {$tw_text} \n";
 						$connection = new TwitterOAuth(
-																	OUTGOING_CONSUMER_KEY,
-																	OUTGOING_CONSUMER_SECRET,
-																	OUTGOING_OAUTH_KEY,
-																	OUTGOING_OAUTH_SECRET);
+							OUTGOING_CONSUMER_KEY,
+							OUTGOING_CONSUMER_SECRET,
+							OUTGOING_OAUTH_KEY,
+							OUTGOING_OAUTH_SECRET
+						);
 						$connection->useragent = 'dcrrspndt tweet-bot';
 						$connection->post(
 							'https://api.twitter.com/1.1/statuses/update.json',
@@ -179,10 +179,7 @@ echo $share."\n";
 		}
 	}
 }
-else
-{
-	print_r($tweets_found);
-}
+
 // alle meta-waardes wegschrijven in de meta-table voor makkelijker cross-linken:
 // selecteer alle artikelen die geen meta_artikel rows bezitten
 $res = mysql_query ('select artikelen.ID as art_id, og from artikelen left outer join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.art_id IS NULL');

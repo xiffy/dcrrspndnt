@@ -43,10 +43,11 @@ while($row = mysql_fetch_array($res) )
 	$og = unserialize(stripslashes($row['og']));
 	$titel = isset($og['title']) ? $og['title'] : substr($row['clean_url'],26);
 	$description = isset($og['description']) ? $og['description'] : 'Een mysterieus artikel';
-	$auth_res = mysql_query('select * from meta where meta.waarde = "'.$og['article:author'].'"');
+	$auth_res = mysql_query('select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:author"');
 	$author = mysql_fetch_array($auth_res);
-	$section_res = mysql_query('select * from meta where meta.waarde = "'.$og['article:section'].'"');
+	$section_res = mysql_query('select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:section"');
 	$section = mysql_fetch_array($section_res);
+	$section_value = isset($section['waarde']) ? $section['waarde'] : '';
 ?>
 		<item>
 			<title><?php echo $titel;?></title>
@@ -54,7 +55,7 @@ while($row = mysql_fetch_array($res) )
 			<description><?php echo $description ?></description>
 			<dc:creator><?php echo $author['waarde'];?></dc:creator>
 			<guid><?php echo $row['clean_url'];?></guid>
-			<category><?php echo $section['waarde'];?></category>
+			<category><?php echo $section_value;?></category>
 			<pubDate><?php echo date('r', strtotime($row['created_at']));?></pubDate>
 		</item>
 <?php } ?>
