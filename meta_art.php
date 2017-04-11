@@ -5,8 +5,8 @@ require_once('functions.php');
 include('db.php');
 
 $meta_id = (int)$_GET['id'];
-$meta_res = mysql_query('select * from meta where ID = '.$meta_id);
-$meta_row = mysql_fetch_array($meta_res);
+$meta_res = mysqli_query($db,'select * from meta where ID = '.$meta_id);
+$meta_row = mysqli_fetch_array($meta_res);
 // determine in what mode we are running; Author or Section?
 $mode = explode(':', $meta_row['type']);
 $mode = isset($mode[1]) ? $mode[1] : 'get off';
@@ -25,8 +25,8 @@ $th_related = $mode == 'author' ? 'auteurs' : 'secties';
 $extra_query_var = $mode == 'author' ? 'article:section' : 'article:author';
 
 // paging dr. beat:
-$count_res = mysql_query('select count(artikelen.id) as amount from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.meta_id = '.$meta_id);
-$count_arr = mysql_fetch_array($count_res);
+$count_res = mysqli_query($db,'select count(artikelen.id) as amount from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.meta_id = '.$meta_id);
+$count_arr = mysqli_fetch_array($count_res);
 $tot_row = $count_arr['amount'];
 
 $start = 0;
@@ -81,9 +81,9 @@ if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 			</tr>
 <?php
 $i = 0;
-$art_res = mysql_query ('select artikelen.* from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.meta_id = '.$meta_id.' group by artikelen.ID '.$order_by.' limit '.$start.','.ITEMS_PER_PAGE);
+$art_res = mysqli_query ($db,'select artikelen.* from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.meta_id = '.$meta_id.' group by artikelen.ID '.$order_by.' limit '.$start.','.ITEMS_PER_PAGE);
 
-while($row = mysql_fetch_array($art_res))
+while($row = mysqli_fetch_array($art_res))
 {
 	$og = unserialize(stripslashes($row['og']));
 	$titel = isset($og['title']) ? $og['title'] : substr($row['clean_url'],26);
@@ -104,8 +104,8 @@ while($row = mysql_fetch_array($art_res))
 	else
 		$display_time = substr($row['created_at'],8,2).'-'.substr($row['created_at'],5,2).' '.substr($row['created_at'],11,5);
 
-	$r = mysql_query ('select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = '.$row['ID'].' and meta.type = "'.$extra_query_var.'"');
-	$extra_arr = mysql_fetch_array($r);
+	$r = mysqli_query ($db,'select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = '.$row['ID'].' and meta.type = "'.$extra_query_var.'"');
+	$extra_arr = mysqli_fetch_array($r);
 	?>
 	<tr <?php if($i % 2 == 1) echo 'class="odd"'?>>
 		<td><abbr title="gevonden op: <?php echo $found_at;?>"><?php echo $display_time ?></abbr></td>
@@ -127,8 +127,8 @@ while($row = mysql_fetch_array($art_res))
 			<tr><th>Alle <?php echo $th_related;?></th></tr>
 <?php
 			$i = 0;
-			$metatype_res = mysql_query('select * from meta where meta.type = "'.$meta_row['type'].'" order by waarde');
-			while($rel_row = mysql_fetch_array($metatype_res))
+			$metatype_res = mysqli_query($db,'select * from meta where meta.type = "'.$meta_row['type'].'" order by waarde');
+			while($rel_row = mysqli_fetch_array($metatype_res))
 			{
 				?>
 				<tr <?php if($i % 2 == 1) echo 'class="odd"'?>>
@@ -143,12 +143,12 @@ while($row = mysql_fetch_array($art_res))
 <?php include('search_box.php'); ?>
 <?php
 // grafiekje tweets per dag over deze meta (auteur of sectie)
-$graph_res = mysql_query("select count(tweets.id) as tweet_count, day(tweets.created_at) as dag, month(tweets.created_at) as maand from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id left outer join tweets on tweets.art_id = artikelen.ID where meta_artikel.meta_id = {$meta_id} and not day(tweets.created_at) is null and tweets.created_at >= date_sub(now(), interval 6 month) group by maand, dag");
+$graph_res = mysqli_query($db,"select count(tweets.id) as tweet_count, day(tweets.created_at) as dag, month(tweets.created_at) as maand from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id left outer join tweets on tweets.art_id = artikelen.ID where meta_artikel.meta_id = {$meta_id} and not day(tweets.created_at) is null and tweets.created_at >= date_sub(now(), interval 6 month) group by maand, dag");
 
 $high = 0;
 $bar_label = '';
 $bar_tweet_data = '';
-while ($row = mysql_fetch_array($graph_res))
+while ($row = mysqli_fetch_array($graph_res))
 {
 	$bar_label .= $row['dag'].',';
 	$bar_tweet_data .= $row['tweet_count'].',';

@@ -21,13 +21,13 @@ include('db.php');
 
 // Grafiek 1; tweets per dag
 
-$tot_tweets_res = mysql_query('select count(tweets.id) as tweet_count, day(tweets.created_at) as  dag, month(tweets.created_at) as maand from tweets where created_at > "2013-10-13 21:00" group by maand, dag order by year(tweets.created_at) desc, month(tweets.created_at) desc, day(tweets.created_at) desc limit 0,30');
+$tot_tweets_res = mysqli_query($db,'select count(tweets.id) as tweet_count, day(tweets.created_at) as  dag, month(tweets.created_at) as maand from tweets where created_at > "2013-10-13 21:00" group by maand, dag order by year(tweets.created_at) desc, month(tweets.created_at) desc, day(tweets.created_at) desc limit 0,30');
 
 $label = array();
 $tweets = array();
 $high = 0;
 $rows = array();
-while ($row = mysql_fetch_array($tot_tweets_res))
+while ($row = mysqli_fetch_array($tot_tweets_res))
 {
 	$rows[] = $row;
 }
@@ -65,10 +65,10 @@ $bar_tweet_data = substr($bar_tweet_data, 0, strlen($bar_tweet_data) - 1);
 
 // Grafiek 2;
 // Tweets per uur en de dagtrend daar op afgezet
-$dagen_res = mysql_query("select date(tweets.created_at) as dagen from tweets group by dagen");
-$dagen = mysql_num_rows($dagen_res);
+$dagen_res = mysqli_query($db,"select date(tweets.created_at) as dagen from tweets group by dagen");
+$dagen = mysqli_num_rows($dagen_res);
 
-$graph_res = mysql_query("select count(tweets.id) as tweet_count, hour(tweets.created_at) as per_uur from tweets where created_at > \"2013-10-13 21:00\" group by per_uur ");
+$graph_res = mysqli_query($db,"select count(tweets.id) as tweet_count, hour(tweets.created_at) as per_uur from tweets where created_at > \"2013-10-13 21:00\" group by per_uur ");
 
 $high = 0;
 $hour_label = '';
@@ -76,7 +76,7 @@ $hour_tweet_data = '';
 $uur_nu = date('H');
 $minuut_nu = date('i');
 
-while ($row = mysql_fetch_array($graph_res))
+while ($row = mysqli_fetch_array($graph_res))
 {
 	$hour_label .= $row['per_uur'].',';
 	$deler = (int)$row['the_uur'] > (int)$uur_nu ? $dagen - 1 : $dagen;
@@ -91,7 +91,7 @@ $hour_tweet_data = substr($hour_tweet_data, 0, strlen($hour_tweet_data) - 1);
 // A la Chartbeat, de lijn wordt langer tijdens de dag
 // verschijnt in de uur-trend-grafiek
 // Eerst de tweets van vandaag
-$res_today = mysql_query("select count(tweets.ID) per_hour, hour(tweets.created_at) as the_hour, tweets.created_at from tweets
+$res_today = mysqli_query($db,"select count(tweets.ID) per_hour, hour(tweets.created_at) as the_hour, tweets.created_at from tweets
 where year(tweets.created_at) = year(now() )
   and month(tweets.created_at) = month(now())
   and day(tweets.created_at) = day(now() )
@@ -99,7 +99,7 @@ group by the_hour
 order by created_at");
 // verwerken in grafiek-data
 $i=0;
-while ($row = mysql_fetch_array($res_today))
+while ($row = mysqli_fetch_array($res_today))
 {
 	while ($i < (int)$row['the_hour'])
 	{
