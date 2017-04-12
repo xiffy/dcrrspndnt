@@ -16,8 +16,8 @@
 require_once('settings.local.php');
 require_once('functions.php');
 include('db.php');
-$count_res = mysql_query('select count(*) as amount from artikelen');
-$count_arr = mysql_fetch_array($count_res);
+$count_res = mysqli_query($db,'select count(*) as amount from artikelen');
+$count_arr = mysqli_fetch_array($count_res);
 $tot_row = $count_arr['amount'];
 $start = 0;
 if(isset($_GET['page']))
@@ -41,7 +41,7 @@ if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 }
 
 $i = 0;
-$res = mysql_query('select artikelen.* from artikelen group by artikelen.id '.$order_by.' limit '.$start.','.ITEMS_PER_PAGE);
+$res = mysqli_query($db,'select artikelen.* from artikelen group by artikelen.id '.$order_by.' limit '.$start.','.ITEMS_PER_PAGE);
 ?>
 		<h1>Artikelen van <a href="http://decorrespondent.nl/">de Correspondent</a> gevonden op Twitter <a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a><a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a></h1>
 <?php include ('menu.php'); ?>
@@ -51,15 +51,15 @@ $res = mysql_query('select artikelen.* from artikelen group by artikelen.id '.$o
 				<?php echo $th_pubdate;?><th>Titel / Artikel</th><th>Auteur</th><th>Sectie</th><?php echo $th_tweets;?>
 			</tr>
 <?php
-while($row = mysql_fetch_array($res) )
+while($row = mysqli_fetch_array($res) )
 {
 	$og = unserialize(stripslashes($row['og']));
 	$titel = isset($og['title']) ? $og['title'] : substr($row['clean_url'],26);
 	$description = isset($og['description']) ? $og['description'] : 'Een mysterieus artikel';
-	$auth_res = mysql_query('select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:author"');
-	$author = mysql_fetch_array($auth_res);
-	$section_res = mysql_query('select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:section"');
-	$section = mysql_fetch_array($section_res);
+	$auth_res = mysqli_query($db, 'select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:author"');
+	$author = mysqli_fetch_array($auth_res);
+	$section_res = mysqli_query($db,'select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:section"');
+	$section = mysqli_fetch_array($section_res);
 	if(isset($og['article:published_time']))
 	{
 		if(strstr($og['article:published_time'], '-'))

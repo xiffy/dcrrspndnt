@@ -9,7 +9,7 @@ include_once ('simple_html_dom.php');
 // database, mysql, why not?
 include('db.php');
 
-$since = get_since();
+$since = get_since($db);
 echo 'sinds: '.$since."\n";
 // go to https://dev.twitter.com/apps and create new application
 // and obtain [CONSUMER_KEY], [CONSUMER_SECRET], [oauth_key], [oauth_secret]
@@ -39,7 +39,7 @@ if (count($tweets)) {
 
 foreach ($tweets as $tweet)
 {	//print_r($tweet->entities->urls);
-	update_since($tweet->id);
+	update_since($tweet->id, $db);
 	foreach($tweet->entities->urls as $url)
 	{
 		$tco = $url->url;
@@ -48,18 +48,18 @@ foreach ($tweets as $tweet)
 		if(! strstr($share, 'decorrespondent'))
 		{
 			$short = $share;
-			$short_res = mysql_query('select * from unshorten where short_url = "'.$short.'"');
-			if(mysql_num_rows($short_res) == 0)
+			$short_res = mysqli_query($db,'select * from unshorten where short_url = "'.$short.'"');
+			if(mysqli_num_rows($short_res) == 0)
 			{
 				echo $short."\n";
 				$share = unshorten_url($short);
 				echo 'became-> '.$share."\n\n";
 				// opslaan opdat we deze niet nogmaals opvragen
-				mysql_query('insert into unshorten (short_url, url) values ("'.addslashes($short).'","'.addslashes($share).'")');
+				mysqli_query($db,'insert into unshorten (short_url, url) values ("'.addslashes($short).'","'.addslashes($share).'")');
 			}
 			else
 			{ // misschien moeten we hem tellen?
-				$short_arr = mysql_fetch_array($short_res);
+				$short_arr = mysqli_fetch_array($short_res);
 				$share = $short_arr['url'];
 			}
 		}
@@ -85,18 +85,18 @@ foreach ($tweets as $tweet)
 					$path = $path[1].'/'.$path[2];
 					$clean = $parsed['scheme'].'://'.$parsed['host'].'/'.$path;
 					$query = 'select * from artikelen where clean_url = "'.$clean.'"';
-					$res = mysql_query($query);
-					if(mysql_num_rows($res))
+					$res = mysqli_query($db, $query);
+					if(mysqli_num_rows($res))
 					{
 						if (COUNT_TWEETS == 1)
 						{
-							$art_row = mysql_fetch_array($res);
-							$tweet_res = mysql_query('select * from tweets where art_id = '.$art_row['ID'].' and tweet_id = "'.$tweet->id.'"');
-							if (mysql_num_rows($tweet_res) == 0)
+							$art_row = mysqli_fetch_array($res);
+							$tweet_res = mysqli_query($db,'select * from tweets where art_id = '.$art_row['ID'].' and tweet_id = "'.$tweet->id.'"');
+							if (mysqli_num_rows($tweet_res) == 0)
 							{
 								echo 'counting tweet '.$tweet->id."\n";
-								mysql_query('insert into tweets (tweet_id, art_id) values ("'.$tweet->id.'", '.$art_row['ID'].')');
-								mysql_query('update artikelen set tweet_count = tweet_count + 1 where artikelen.ID = '.$art_row['ID']);
+								mysqli_query($db, 'insert into tweets (tweet_id, art_id) values ("'.$tweet->id.'", '.$art_row['ID'].')');
+								mysqli_query($db, 'update artikelen set tweet_count = tweet_count + 1 where artikelen.ID = '.$art_row['ID']);
 							}
 						}
 
@@ -134,8 +134,8 @@ foreach ($tweets as $tweet)
 					$og = serialize($og);
 
 					echo 'inserting: insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.substr($og,0,20).'")'."\n";
-					mysql_query('insert into artikelen (t_co, clean_url, share_url, og, tweet_count) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.addslashes($og).'", 0)');
-					$artikel_id = mysql_insert_id();
+					mysqli_query($db, 'insert into artikelen (t_co, clean_url, share_url, og, tweet_count) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.addslashes($og).'", 0)');
+					$artikel_id = mysqli_insert_id();
 					// if mysql failed be sure not to send a tweet
 					if (! $artikel_id)
 						continue;
@@ -143,8 +143,8 @@ foreach ($tweets as $tweet)
 					if (COUNT_TWEETS == 1)
 					{
 						echo 'counting tweet '.$tweet->id."\n";
-						mysql_query('insert into tweets (tweet_id, art_id) values ("'.$tweet->id.'", '.$artikel_id.')');
-						mysql_query('update artikelen set tweet_count = tweet_count + 1 where artikelen.ID = '.$artikel_id);
+						mysqli_query($db, 'insert into tweets (tweet_id, art_id) values ("'.$tweet->id.'", '.$artikel_id.')');
+						mysqli_query($db, 'update artikelen set tweet_count = tweet_count + 1 where artikelen.ID = '.$artikel_id);
 					}
 
 					// stuur er ook een tweet uit op het speciale twitter account:
@@ -182,9 +182,9 @@ foreach ($tweets as $tweet)
 
 // alle meta-waardes wegschrijven in de meta-table voor makkelijker cross-linken:
 // selecteer alle artikelen die geen meta_artikel rows bezitten
-$res = mysql_query ('select artikelen.ID as art_id, og from artikelen left outer join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.art_id IS NULL');
+$res = mysqli_query ($db,'select artikelen.ID as art_id, og from artikelen left outer join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.art_id IS NULL');
 $skip_keys = array('url', 'locale', 'site_name');
-while ($row = mysql_fetch_array($res))
+while ($row = mysqli_fetch_array($res))
 {
 	$og = unserialize($row['og']);
 	$art_id = $row['art_id'];
@@ -193,36 +193,36 @@ while ($row = mysql_fetch_array($res))
 		if(in_array($key, $skip_keys))
 			continue;
 
-		$meta_res = mysql_query('select * from meta where `type` = "'.$key.'" and waarde = "'.$value.'"');
-		if (mysql_num_rows($meta_res) == 0)
+		$meta_res = mysqli_query($db, 'select * from meta where `type` = "'.$key.'" and waarde = "'.$value.'"');
+		if (mysqli_num_rows($meta_res) == 0)
 		{
-			mysql_query('insert into meta (waarde, type) values ("'.$value.'", "'.$key.'")');
-			$meta_id = mysql_insert_id();
+			mysqli_query($db, 'insert into meta (waarde, type) values ("'.$value.'", "'.$key.'")');
+			$meta_id = mysqli_insert_id();
 		}
 		else
 		{
-			$meta_arr = mysql_fetch_array($meta_res);
+			$meta_arr = mysqli_fetch_array($meta_res);
 			$meta_id = $meta_arr['ID'];
 		}
 		// koppel aan het gevonden artikel
-		$link_res = mysql_query('select * from meta_artikel where art_id = '.$art_id.' and meta_id = '.$meta_id);
-		if( mysql_num_rows($link_res) == 0)
+		$link_res = mysqli_query($db, 'select * from meta_artikel where art_id = '.$art_id.' and meta_id = '.$meta_id);
+		if( mysqli_num_rows($link_res) == 0)
 		{ // en maak de meta-link
-			mysql_query('insert into meta_artikel (art_id, meta_id) values ('.$art_id.', '.$meta_id.')');
+			mysqli_query($db, 'insert into meta_artikel (art_id, meta_id) values ('.$art_id.', '.$meta_id.')');
 		}
 	}
 }
 
-function update_since($since)
+function update_since($since, $db)
 {
 	$query = 'update app_keys set app_keys.app_value = "'.$since.'" where app_key = "since"';
-	mysql_query($query);
+	mysqli_query($db, $query);
 }
 
-function get_since()
+function get_since($db)
 {
-	$res = mysql_query('select app_value from app_keys where app_key = "since"');
-	$row = mysql_fetch_array($res);
+	$res = mysqli_query($db, 'select app_value from app_keys where app_key = "since"');
+	$row = mysqli_fetch_array($res);
 	return $row['app_value'];
 }
 

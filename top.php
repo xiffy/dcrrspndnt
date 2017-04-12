@@ -69,7 +69,7 @@ if(isset($_GET['mode']))
 }
 
 $i = 0;
-$res = mysql_query('select artikelen.*, count(tweets.id) as tweet_count from artikelen left outer join tweets on tweets.art_id = artikelen.id '.$mode.' group by artikelen.id having tweet_count > 0 '.$order_by.' limit '.$start.',50');
+$res = mysqli_query($db,'select artikelen.*, count(tweets.id) as tweet_count from artikelen left outer join tweets on tweets.art_id = artikelen.id '.$mode.' group by artikelen.id having tweet_count > 0 '.$order_by.' limit '.$start.',50');
 ?>
 		<h1><?php echo $title;?> <a href="#footer" title="Klik en lees de verantwoording onderaan de pagina"> &#x15e3;</a><a href="https://twitter.com/dcrrspndnt" class="twitter-follow-button" data-show-count="false" data-lang="nl">Volg @dcrrspndnt</a></h1>
 <?php include ('menu.php'); ?>
@@ -80,15 +80,15 @@ $res = mysql_query('select artikelen.*, count(tweets.id) as tweet_count from art
 			</tr>
 <?php
 $tot_tweets = 0;
-while($row = mysql_fetch_array($res) )
+while($row = mysqli_fetch_array($res) )
 {
 	$og = unserialize(stripslashes($row['og']));
 	$titel = isset($og['title']) ? $og['title'] : substr($row['clean_url'],26);
 	$description = isset($og['description']) ? $og['description'] : 'Een mysterieus artikel';
-	$auth_res = mysql_query('select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:author"');
-	$author = mysql_fetch_array($auth_res);
-	$section_res = mysql_query('select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:section"');
-	$section = mysql_fetch_array($section_res);
+	$auth_res = mysqli_query($db,'select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:author"');
+	$author = mysqli_fetch_array($auth_res);
+	$section_res = mysqli_query($db,'select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:section"');
+	$section = mysqli_fetch_array($section_res);
 	if(isset($og['article:published_time']))
 	{
 		if(strstr($og['article:published_time'], '-'))

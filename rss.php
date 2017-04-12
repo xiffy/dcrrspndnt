@@ -15,8 +15,8 @@ left join meta on meta.id = meta_artikel.meta_id where meta.`type` = "article:pu
 if (isset($_GET['id']))
 {
 	$meta_id = (int) $_GET['id'];
-	$meta_res = mysql_query('select * from meta where id = '.$meta_id );
-	$meta_arr = mysql_fetch_array($meta_res);
+	$meta_res = mysqli_query($db,'select * from meta where id = '.$meta_id );
+	$meta_arr = mysqli_fetch_array($meta_res);
 	$extra_type = explode(':', $meta_arr['type']);
 	$type = $extra_type[1];
 	$value = $meta_arr['waarde'];
@@ -24,7 +24,7 @@ if (isset($_GET['id']))
 	$query = 'select artikelen.*, unixtime(artikelen.created_at) as tm from artikelen join meta_artikel on artikelen.ID = meta_artikel.art_id where meta_artikel.meta_id = '.$meta_id.' order by created_at desc limit 0,50';
 }
 $i = 0;
-$res = mysql_query($query);
+$res = mysqli_query($db, $query);
 ?>
 
 		<title>de Correspondent - gedeelde artikelen. <?php echo $extra_title;?></title>
@@ -38,15 +38,15 @@ $res = mysql_query($query);
 		<atom:link href="http://molecule.nl/decorrespondent/rss.php" rel="self" type="application/rss+xml" />
 
 <?php
-while($row = mysql_fetch_array($res) )
+while($row = mysqli_fetch_array($res) )
 {
 	$og = unserialize(stripslashes($row['og']));
 	$titel = isset($og['title']) ? $og['title'] : substr($row['clean_url'],26);
 	$description = isset($og['description']) ? $og['description'] : 'Een mysterieus artikel';
-	$auth_res = mysql_query('select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:author"');
-	$author = mysql_fetch_array($auth_res);
-	$section_res = mysql_query('select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:section"');
-	$section = mysql_fetch_array($section_res);
+	$auth_res = mysqli_query($db,'select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:author"');
+	$author = mysqli_fetch_array($auth_res);
+	$section_res = mysqli_query($db,'select * from meta_artikel left join meta on meta.ID = meta_artikel.meta_id where meta_artikel.art_id = ' .$row['ID']. ' and type = "article:section"');
+	$section = mysqli_fetch_array($section_res);
 	$section_value = isset($section['waarde']) ? $section['waarde'] : '';
 ?>
 		<item>

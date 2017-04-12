@@ -1,3 +1,3 @@
 <?php
-$db = mysql_connect(DB_HOST, DB_USER, DB_PASSWD);
-mysql_select_db(DB_NAME);
+$db = mysqli_connect(DB_HOST, DB_USER, DB_PASSWD);
+mysqli_select_db($db,DB_NAME);
