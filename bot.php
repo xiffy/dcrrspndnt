@@ -124,7 +124,7 @@ foreach ($tweets as $tweet)
 						foreach($html->find('meta[name=author]') as $author) {
 							$og['article:author'] = stripslashes($author->content);
 						}
-						foreach($html->find('div[class=publication-authors-department]') as $section) {
+						foreach($html->find('div[class*=-department]') as $section) {
 							$og['article:section'] = str_replace(array('Gastcorrespondent ', 'Correspondent '), '', $section->plaintext);
 						}
 					}
