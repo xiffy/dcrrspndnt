@@ -1,228 +1,273 @@
 ﻿body {
-	background: #eee;
-	font-family: tahoma, "Trebuchet MS", Helvetica, sans-serif;
-	font-size: 12px;
-	color: #444;
-	padding: 0;
-	margin: 0;
+  background: #e5e4e4;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color: #444;
+  padding: 0;
+  margin: 0;
 }
+
 a {
-	color: #000;
-	text-decoration: none;
-	}
+  color: #000;
+  text-decoration: none;
+}
+
 a:hover,
 a:active {
-	border-bottom: 1px dotted red;
-	}
+  border-bottom: 1px dotted red;
+}
+
 a:visited {
-	border-bottom: 1px solid #666;
-	}
+  border-bottom: 1px solid #666;
+}
+
 table {
-	background: #fff;
-	margin: 0 auto;
-	font-size: 14px;
-	border-spacing: 0;
-	border: 1px solid #ccc;
-	}
+  background: #fff;
+  margin: 0 auto;
+  font-size: 14px;
+  border-spacing: 0;
+  border: 1px solid #ccc;
+}
+
 tr:hover,
 tr.odd:hover {
-	background: #9ECECA;
-	}
-td {
-	padding: 2px 5px;
-	}
-tr.odd {
-	background: #efefef;
-	}
-th {
-	background: #eee;
-	}
+  background: #9ECECA;
+}
 
+td {
+  padding: .75em;
+}
+
+tr.odd {
+  background: #efefef;
+}
+
+th {
+  background: #e5e4e4;
+  padding: .75em;
+}
 
 h1 {
-	width: auto;
-	color: #ccc;
-	background-color: #232323;
-	box-shadow: 0 -20px 50px #555 inset;
-	padding: 5px 10px 30px 10px;
-	margin: 0 0 10px 0;
-	}
+  width: auto;
+  color: #df5b57;
+  background-color: #000;
+  padding: 5px 10px 40px 25px;
+  margin: 0 0 10px 0;
+  font-size: 1.25em;
+}
+
 h1 a {
-	color: #fff;
-	}
+  color: #df5b57;
+}
+
 h1 .twitter-follow-button {
-	float: right;
-	margin: 15px;
-	}
+  float: right;
+  margin: 15px;
+}
+
 .meta-table {
-	float: left;
-	max-width: 60%;
-	min-width: 60%;
-	margin: 0 10px;
-	}
+  float: left;
+  max-width: 60%;
+  min-width: 60%;
+  margin: 0 10px;
+}
+
 .center {
-	width: 100%;
-	}
+  width: 100%;
+  max-width: 1035px;
+  margin: 0 auto;
+}
+
 .clear {
-	clear: both;
-	}
+  clear: both;
+}
+
 .all {
-	padding: 0 5px;
-	margin-bottom: 3px;
-	}
+  padding: 0 5px;
+  margin-bottom: 3px;
+}
 
 #topmenu {
-	width: 600px;
-	position: absolute;
-	top: 40px;
-	left: 15px;
-	color: #fff;
-	font-size: 16px;
-	}
+  width: 600px;
+  position: absolute;
+  top: 40px;
+  left: 15px;
+  color: #9ececa;
+  font-size: 16px;
+}
+
 ul#topmenu {
-	margin: 0;
-	padding: 0;
-	}
+  margin: 0;
+  padding: 0;
+}
+
 #topmenu ul {
-	margin: 0;
-	padding: 0;
-	}
+  margin: 0;
+  padding: 0;
+}
+
 #topmenu a {
-	fontsize: 16px;
-	color: #fff;
-	text-decoration: none;
-	border: none;
-	overflow: hidden;
-	}
+  fontsize: 16px;
+  color: #9ececa;
+  text-decoration: none;
+  border: none;
+  overflow: hidden;
+}
+
 #topmenu li {
-	margin: 0;
-	padding 0;
-	width: 170px;
-	display: inline;
-	float: left;
-	}
+  margin: 0;
+  padding: 0 10px;
+  display: inline;
+  float: left;
+  position: relative;
+}
+
 #topmenu li.small {
-	width: 80px;
-	}
+  width: 80px;
+}
 
 #topmenu li li {
-	width: 250px;
-	}
-ul#topmenu ul {
-	display: none;
-	}
-ul#topmenu ul li {
-	background: rgb(35, 35, 35);
-	padding: 0 10px;
-	width: 300px;
-	height: 25px;
-	margin: 0 -10px;
-	}
-ul#topmenu ul li:last-child {
-	border-bottom:5px solid rgb(35, 35, 35);
-	}
-ul#topmenu ul li:first-child {
-	border-top:5px solid rgb(35, 35, 35);
-	}
-ul#topmenu li:hover > ul {
-	display: block;
-	background: #DF5B57;
-	}
-ul#topmenu li ul li div {
-	width: 100%;
-	height: 25px;
-	}
-ul#topmenu li ul li a:hover > div {
-	color: #000;
-	background: #9ECECA;
-	}
-.search_box {
-	width: 300px;
-	background: #fff;
-	margin: 10px auto;
-	padding: 5px;
-	}
-label {
-	font-weight: bold;
-	}
-.search_box input[type=text] {
-	border: 1px solid #444;
-	padding: 2px 5px;
-	margin: 1px 5px;
-	}
-ul#pager {
-	margin: 10px auto;
-	padding: 5px;
-	background-color: #fff;
-	height: 24px;
+  width: 250px;
 }
-#meta_art ul#pager {
-	clear:left;
-	float: left;
-	max-width: 60%;
-	}
-.meta_graph {
-	width: 800px;
-	margin: 10px auto 10px 40px;
-}
-ul#pager li {
-	margin: 0 5px;
-	padding: 0;
-	display: inline;
-	float: left;
-	width: 36px;
-	color: #fff;
-	background:  #000;
-	text-align: center;
-	font-size: 16px;
-	}
 
+ul#topmenu ul {
+  display: none;
+  position: absolute;
+}
+
+ul#topmenu ul li {
+  background: rgb(35, 35, 35);
+  padding: 0 10px;
+  width: 300px;
+  height: 25px;
+  margin: 0 -10px;
+}
+
+ul#topmenu ul li:last-child {
+  border-bottom: 5px solid rgb(35, 35, 35);
+}
+
+ul#topmenu ul li:first-child {
+  border-top: 5px solid rgb(35, 35, 35);
+}
+
+ul#topmenu li:hover > ul {
+  display: block;
+  background: #DF5B57;
+}
+
+ul#topmenu li ul li div {
+  width: 100%;
+  height: 25px;
+}
+
+ul#topmenu li ul li a:hover > div {
+  color: #000;
+  background: #9ECECA;
+}
+
+.search_box {
+  width: 300px;
+  background: #fff;
+  margin: 10px auto;
+  padding: 5px;
+}
+
+label {
+  font-weight: bold;
+}
+
+.search_box input[type=text] {
+  border: 1px solid #444;
+  padding: 2px 5px;
+  margin: 1px 5px;
+}
+
+ul#pager {
+  margin: 10px auto;
+  padding: 5px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+#meta_art ul#pager {
+  clear: left;
+  float: left;
+  max-width: 60%;
+}
+
+.meta_graph {
+  width: 800px;
+  margin: 10px auto 10px 40px;
+}
+
+ul#pager li {
+  margin: 0 5px;
+  padding: 0;
+  display: inline;
+  float: left;
+  color: #fff;
+  background: #000;
+  text-align: center;
+  font-size: 16px;
+}
 
 form.disp_selector {
-	display: inline;
-	margin: 2px 5px;
-	}
-ul#pager li a {
-	color: #fff;
-	font-weight: bold;
-	}
-ul#pager li.current a {
-	color: orange;
+  display: inline;
+  margin: 2px 5px;
 }
+
+ul#pager li a {
+  color: #fff;
+  font-weight: bold;
+  padding: .2em .75em;
+}
+
+ul#pager li.current a {
+  color: orange;
+}
+
 ul#pager li:hover {
-	background: #9ECECA;
-	}
+  background: #9ECECA;
+}
+
 ul#pager li a:hover {
-	color: #000;
-	}
+  color: #000;
+}
+
 ul#pager li.text {
-	background: transparent;
-	color: #000;
-	width: auto;
-	}
+  background: transparent;
+  color: #000;
+  width: auto;
+}
+
 footer {
-	margin: 0;
-	background: #555;
-	color: #ddd;
-	min-height: 200px;
-	padding-top: 20px;
-	}
+  margin: 0;
+  background: #555;
+  color: #ddd;
+  min-height: 200px;
+  padding-top: 20px;
+}
+
 footer p {
-	padding: 0 10px;
-	}
+  padding: 0 10px;
+}
+
 footer a {
-	color: #fff;
-	}
+  color: #fff;
+}
+
 footer .follow-me {
-	display: inline;
-	float: right;
-	margin: 10px;
-	width: 200px;
-	background: #333;
-	color: #fff;
-	border-radius: 5px;
-	}
+  display: inline;
+  float: right;
+  margin: 10px;
+  width: 200px;
+  background: #333;
+  color: #fff;
+  border-radius: 5px;
+}
+
 .follow-me .twitter-follow-button {
-	margin-left:20px;
-	margin-top: 10px;
-	}
+  margin-left: 20px;
+  margin-top: 10px;
+}
