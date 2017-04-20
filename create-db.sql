@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `artikelen` (
   `share_url` varchar(255) NOT NULL DEFAULT '',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `og` mediumtext,
+  `tweet_count` int(10),
   PRIMARY KEY (`ID`),
   UNIQUE KEY `clean_url` (`clean_url`),
   UNIQUE KEY `t_co` (`t_co`),
