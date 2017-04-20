@@ -62,9 +62,6 @@ if(isset($_GET['order']) && $_GET['order'] == 'tweets')
 		<title>de Correspondent, artikelen <?php echo (string)$title_by_in; ?>: <?php echo (string)$meta_row['waarde'].' ('.$mode.')';?></title>
 		<link rel="stylesheet" href="./style2.css" />
 		<link rel="alternate" type="application/rss+xml" title="Artikelen van De Correspondent - crrspndnt" href="./rss.php">
-		<?php
-		@include('./tinypass.js')
-		?>
 		<script src="Chart.min.js"></script>
 	</head>
 	<body id="meta_art">
