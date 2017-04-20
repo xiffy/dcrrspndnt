@@ -135,7 +135,7 @@ foreach ($tweets as $tweet)
 
 					echo 'inserting: insert into artikelen (t_co, clean_url, share_url, og) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.substr($og,0,20).'")'."\n";
 					mysqli_query($db, 'insert into artikelen (t_co, clean_url, share_url, og, tweet_count) values ("'.$tco.'", "'.$clean.'", "'.$share.'", "'.addslashes($og).'", 0)');
-					$artikel_id = mysqli_insert_id();
+					$artikel_id = mysqli_insert_id($db);
 					// if mysql failed be sure not to send a tweet
 					if (! $artikel_id)
 						continue;
