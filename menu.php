@@ -17,7 +17,7 @@ from meta
 join meta_artikel on meta.id = meta_id
 left join artikelen on artikelen.id = art_id
 where meta.type = "article:author"
-group by meta.id
+group by meta.id, meta.waarde, meta.type
 order by count(artikelen.id) desc, waarde
 limit 0,25');
 while($row = mysqli_fetch_array($r))
@@ -37,7 +37,7 @@ from meta
 join meta_artikel on meta.id = meta_id
 left join artikelen on artikelen.id = art_id
 where meta.type = "article:section"
-group by meta.id
+group by meta.id, meta.waarde, meta.type
 order by count(artikelen.id) desc, waarde
 limit 0,25');
 while($row = mysqli_fetch_array($r))
