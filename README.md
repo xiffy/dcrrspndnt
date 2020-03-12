@@ -1,3 +1,6 @@
+#### abandon
+This project won't be maintained anymore. I've rewritten most of it here: https://github.com/xiffy/thcrrspndnt
+
 dcrrspndnt
 ==========
 
